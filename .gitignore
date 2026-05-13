@@ -1,0 +1,6 @@
+*.py
+*.txt
+*.log
+orchestrate*
+gen_ollama*
+build*

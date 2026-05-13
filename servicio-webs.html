@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Webs Premium — SIMBAI | Diseño web con scroll effects y conversión real</title>
+<meta name="description" content="Webs de alto impacto con efectos de scroll, animaciones GSAP y optimización de conversión. Para pymes, clínicas, restaurantes y negocios que quieren destacar.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<style>
+:root {
+  --bg: #07090f;
+  --bg2: #0c1120;
+  --card: #111827;
+  --border: #1e2d45;
+  --accent: #4f7fff;
+  --accent2: #a855f7;
+  --gold: #d4af37;
+  --gold2: #f5e3a3;
+  --text: #e2e8f4;
+  --muted: #6b7a9c;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: auto; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+@media (min-width: 901px) {
+  body, body *, body a, body button { cursor: none !important; }
+}
+
+/* CURSOR */
+#cur-logo {
+  position: fixed; width: 42px; height: 42px;
+  pointer-events: none; z-index: 9998; top: -100px; left: -100px;
+  filter: drop-shadow(0 0 10px rgba(79,127,255,0.6)) drop-shadow(0 0 24px rgba(168,85,247,0.3));
+  transition: width 0.25s cubic-bezier(0.4,0,0.2,1), height 0.25s cubic-bezier(0.4,0,0.2,1), filter 0.3s ease;
+  will-change: left, top, transform;
+}
+#cur-logo.hvr { width: 60px; height: 60px; filter: drop-shadow(0 0 22px rgba(79,127,255,1)) drop-shadow(0 0 44px rgba(168,85,247,0.6)); }
+#cur-logo.click { width: 30px; height: 30px; }
+@media (max-width: 900px) { #cur-logo { display: none; } }
+#mouse-glow {
+  position: fixed; width: 500px; height: 500px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(79,127,255,0.05) 0%, rgba(168,85,247,0.02) 45%, transparent 70%);
+  pointer-events: none; z-index: 0; top: 0; left: 0;
+}
+
+/* CINEMA */
+#cinema-panel {
+  position: fixed; inset: 0; background: #000;
+  z-index: 9990; transform: translateX(100%);
+  pointer-events: none;
+}
+#cinema-bar-t, #cinema-bar-b {
+  position: fixed; left: 0; right: 0; height: 0;
+  background: #000; z-index: 9989; pointer-events: none;
+}
+#cinema-bar-t { top: 0; }
+#cinema-bar-b { bottom: 0; }
+
+/* AMBIENT */
+.amb-orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(120px); animation: amb-float 18s ease-in-out infinite; }
+.amb-orb-1 { width: 600px; height: 600px; top: -200px; left: -200px; background: rgba(79,127,255,0.04); animation-duration: 20s; }
+.amb-orb-2 { width: 500px; height: 500px; bottom: 10%; right: -150px; background: rgba(168,85,247,0.035); animation-duration: 25s; animation-delay: -8s; }
+@keyframes amb-float { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(40px,-30px) scale(1.05)} 66%{transform:translate(-20px,20px) scale(0.96)} }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 20px 60px;
+  background: rgba(7,9,15,0.88); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo-text { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.nav-back { color: var(--muted); font-size: 14px; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.nav-back:hover { color: var(--text); }
+.nav-cta { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 10px 24px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity 0.2s; }
+.nav-cta:hover { opacity: 0.85; }
+@media (max-width: 768px) { nav { padding: 16px 24px; } .nav-back span { display: none; } }
+
+/* HERO */
+.svc-hero {
+  position: relative; z-index: 1; min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 80px;
+  padding: 140px 80px 80px; max-width: 1300px; margin: 0 auto;
+}
+@media (max-width: 900px) { .svc-hero { grid-template-columns: 1fr; padding: 120px 24px 60px; gap: 48px; } }
+.svc-hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(79,127,255,0.1); border: 1px solid rgba(79,127,255,0.3);
+  border-radius: 50px; padding: 6px 16px; font-size: 12px; color: var(--accent);
+  font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 24px;
+}
+.svc-hero h1 { font-size: clamp(36px,5vw,68px); font-weight: 900; line-height: 1.06; letter-spacing: -2px; margin-bottom: 24px; }
+.accent-grad { background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.svc-hero-sub { font-size: 17px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; }
+.svc-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-accent { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; padding: 14px 32px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 0 30px rgba(79,127,255,0.3); }
+.btn-accent:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(79,127,255,0.5); }
+.btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); padding: 14px 32px; border-radius: 50px; font-size: 15px; font-weight: 500; text-decoration: none; transition: border-color 0.2s; }
+.btn-ghost:hover { border-color: var(--accent); }
+
+/* BROWSER MOCKUP */
+.browser-wrap { position: relative; }
+.browser-mockup {
+  background: #0d1117; border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 60px rgba(79,127,255,0.1);
+}
+.browser-bar {
+  background: #161b22; padding: 12px 20px; display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.browser-dots { display: flex; gap: 6px; }
+.browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+.browser-dot:nth-child(1) { background: #ff5f57; }
+.browser-dot:nth-child(2) { background: #febc2e; }
+.browser-dot:nth-child(3) { background: #28c840; }
+.browser-url {
+  flex: 1; background: #0d1117; border-radius: 6px; padding: 4px 12px;
+  font-size: 11px; color: var(--muted); font-family: monospace;
+}
+.browser-content { padding: 0; }
+.page-preview { width: 100%; display: block; }
+
+/* PAGE PREVIEW SVG */
+.preview-hero { background: linear-gradient(160deg, #0a0f1e 0%, #0d1330 100%); padding: 32px 28px 20px; }
+.preview-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+.preview-logo { font-size: 13px; font-weight: 900; fill: url(#previewGrad); }
+.preview-links { display: flex; gap: 14px; }
+.preview-link { width: 28px; height: 4px; background: #1e2d45; border-radius: 2px; }
+.preview-btn-nav { width: 50px; height: 16px; background: linear-gradient(90deg, #4f7fff, #a855f7); border-radius: 8px; }
+.preview-h1-block { margin-bottom: 16px; }
+.preview-h1-line { height: 10px; border-radius: 5px; margin-bottom: 7px; }
+.preview-h1-line-1 { background: linear-gradient(90deg, #4f7fff, #a855f7); width: 85%; }
+.preview-h1-line-2 { background: linear-gradient(90deg, #a855f7, #ec4899); width: 65%; }
+.preview-sub-line { height: 5px; background: #1e2d45; border-radius: 3px; margin-bottom: 5px; }
+.preview-sub-line-1 { width: 90%; }
+.preview-sub-line-2 { width: 70%; }
+.preview-btns { display: flex; gap: 8px; margin-top: 14px; }
+.preview-btn-primary { height: 18px; width: 70px; background: linear-gradient(90deg,#4f7fff,#a855f7); border-radius: 9px; }
+.preview-btn-secondary { height: 18px; width: 60px; background: transparent; border: 1px solid #1e2d45; border-radius: 9px; }
+.preview-cards { display: flex; gap: 8px; padding: 16px 28px; }
+.preview-card { flex: 1; background: #111827; border: 1px solid #1e2d45; border-radius: 8px; padding: 10px 8px; }
+.preview-card-dot { width: 18px; height: 18px; border-radius: 5px; margin-bottom: 6px; }
+.preview-card-line-1 { height: 5px; background: #1e2d45; border-radius: 3px; width: 80%; margin-bottom: 4px; }
+.preview-card-line-2 { height: 4px; background: #161d2e; border-radius: 3px; width: 60%; }
+
+/* SCROLL ANIMATION indicator */
+.scroll-anim-hint {
+  display: flex; align-items: center; gap: 10px; margin-top: 20px;
+  font-size: 11px; color: var(--muted); letter-spacing: 1px; text-transform: uppercase;
+}
+.scroll-anim-track { width: 32px; height: 1px; background: var(--muted); position: relative; }
+.scroll-anim-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); position: absolute; top: -2.5px; left: 0; animation: scroll-dot 2s ease-in-out infinite; }
+@keyframes scroll-dot { 0%,100%{left:0;opacity:1} 50%{left:26px;opacity:0.6} }
+
+/* STATS ROW */
+.svc-stats { display: flex; gap: 0; margin-top: 36px; border-top: 1px solid var(--border); padding-top: 28px; }
+.svc-stat { flex: 1; text-align: center; }
+.svc-stat:not(:last-child) { border-right: 1px solid var(--border); }
+.svc-stat-num { font-size: 28px; font-weight: 900; letter-spacing: -1px; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.svc-stat-lbl { font-size: 11px; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* SECTION */
+.svc-section { position: relative; z-index: 1; padding: 100px 80px; max-width: 1300px; margin: 0 auto; }
+@media (max-width: 900px) { .svc-section { padding: 60px 24px; } }
+.section-tag { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+.section-title { font-size: clamp(28px,4vw,48px); font-weight: 900; letter-spacing: -1.5px; margin-bottom: 16px; line-height: 1.1; }
+.section-sub { font-size: 16px; color: var(--muted); max-width: 560px; line-height: 1.7; margin-bottom: 56px; }
+
+/* FEATURES GRID */
+.feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+.feat-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 28px;
+  transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden;
+}
+.feat-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(79,127,255,0.04), rgba(168,85,247,0.02));
+  opacity: 0; transition: opacity 0.3s;
+}
+.feat-card:hover { border-color: rgba(79,127,255,0.35); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(79,127,255,0.08); }
+.feat-card:hover::before { opacity: 1; }
+.feat-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(79,127,255,0.1); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+.feat-icon svg { width: 20px; height: 20px; }
+.feat-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.feat-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+/* EFFECT SHOWCASE */
+.effects-showcase {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 56px;
+}
+@media (max-width: 700px) { .effects-showcase { grid-template-columns: 1fr; } }
+.effect-card {
+  border-radius: 16px; overflow: hidden; position: relative;
+  background: var(--card); border: 1px solid var(--border);
+  aspect-ratio: 4/3; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;
+}
+.effect-card:hover { transform: scale(1.03); box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+.effect-label {
+  position: absolute; bottom: 12px; left: 0; right: 0; text-align: center;
+  font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
+/* Parallax demo */
+.demo-parallax { width: 100%; height: 100%; position: relative; overflow: hidden; }
+.parallax-layer { position: absolute; border-radius: 8px; }
+.pl-1 { width: 60%; height: 40%; top: 15%; left: 20%; background: linear-gradient(135deg, rgba(79,127,255,0.3), rgba(168,85,247,0.2)); animation: pl-float1 6s ease-in-out infinite; }
+.pl-2 { width: 40%; height: 30%; top: 30%; left: 10%; background: linear-gradient(135deg, rgba(212,175,55,0.2), rgba(79,127,255,0.15)); animation: pl-float2 8s ease-in-out infinite; }
+.pl-3 { width: 35%; height: 25%; top: 20%; right: 10%; background: rgba(168,85,247,0.15); animation: pl-float3 7s ease-in-out infinite; }
+@keyframes pl-float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+@keyframes pl-float2 { 0%,100%{transform:translateY(0) translateX(0)} 50%{transform:translateY(-8px) translateX(6px)} }
+@keyframes pl-float3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(10px)} }
+
+/* Text reveal demo */
+.demo-text-reveal { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 16px; }
+.reveal-line { height: 8px; border-radius: 4px; overflow: hidden; width: 100%; }
+.reveal-line-inner { height: 100%; border-radius: 4px; animation: reveal-slide 3s ease-in-out infinite; }
+.reveal-line:nth-child(1) .reveal-line-inner { width: 85%; background: linear-gradient(90deg, var(--accent), var(--accent2)); animation-delay: 0s; }
+.reveal-line:nth-child(2) .reveal-line-inner { width: 70%; background: linear-gradient(90deg, var(--accent2), #ec4899); animation-delay: 0.3s; }
+.reveal-line:nth-child(3) .reveal-line-inner { width: 55%; background: linear-gradient(90deg, #ec4899, var(--accent)); animation-delay: 0.6s; }
+@keyframes reveal-slide { 0%{transform:translateX(-100%)} 40%,60%{transform:translateX(0)} 100%{transform:translateX(100%)} }
+
+/* Particle demo */
+.demo-particles { width: 100%; height: 100%; position: relative; }
+.particle { position: absolute; border-radius: 50%; animation: particle-move linear infinite; }
+@keyframes particle-move { 0%{transform:translateY(100%) scale(0);opacity:0} 10%{opacity:1} 90%{opacity:0.5} 100%{transform:translateY(-120%) scale(1.5);opacity:0} }
+
+/* PIN SCROLL demo */
+.demo-pin { width: 100%; height: 100%; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.pin-card { width: 70%; background: rgba(79,127,255,0.1); border: 1px solid rgba(79,127,255,0.3); border-radius: 12px; padding: 20px; animation: pin-card-anim 4s ease-in-out infinite; }
+.pin-card-line { height: 6px; border-radius: 3px; margin-bottom: 8px; background: rgba(79,127,255,0.4); }
+.pin-card-line:nth-child(2) { width: 70%; background: rgba(168,85,247,0.4); }
+.pin-card-line:nth-child(3) { width: 50%; background: rgba(236,72,153,0.4); }
+@keyframes pin-card-anim { 0%,100%{transform:scale(1) rotate(0deg)} 50%{transform:scale(0.95) rotate(1deg)} }
+
+/* PROCESS */
+.process-steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+.process-steps::before { content:''; position:absolute; left:28px; top:40px; bottom:40px; width:1px; background:linear-gradient(to bottom, var(--accent), var(--accent2), transparent); }
+.process-step {
+  display: flex; gap: 24px; align-items: flex-start; padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+.process-step:last-child { border-bottom: none; }
+.ps-num { width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent2)); display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 900; color: #fff; flex-shrink: 0; position: relative; z-index: 1; box-shadow: 0 0 20px rgba(79,127,255,0.3); }
+.ps-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; padding-top: 12px; }
+.ps-content p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+.ps-badge { display: inline-block; background: rgba(79,127,255,0.1); border: 1px solid rgba(79,127,255,0.2); border-radius: 50px; padding: 3px 10px; font-size: 11px; color: var(--accent); font-weight: 600; margin-top: 8px; }
+
+/* PRICING */
+.pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.price-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 36px 28px;
+  display: flex; flex-direction: column; transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden;
+}
+.price-card.featured { border-color: rgba(79,127,255,0.5); box-shadow: 0 0 60px rgba(79,127,255,0.1); }
+.price-card.featured::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg, rgba(79,127,255,0.04), rgba(168,85,247,0.02)); pointer-events:none; }
+.price-badge { position:absolute; top:20px; right:20px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:#fff; font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:50px; }
+.price-card:hover { border-color: rgba(79,127,255,0.4); transform: translateY(-4px); box-shadow: 0 30px 80px rgba(79,127,255,0.1); }
+.price-name { font-size: 14px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+.price-amount { font-size: 48px; font-weight: 900; letter-spacing: -2px; line-height: 1; margin-bottom: 4px; }
+.price-period { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+.price-features { list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.price-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; }
+.price-features li::before { content:''; display:block; width:16px; height:16px; border-radius:50%; background:linear-gradient(135deg,var(--accent),var(--accent2)); flex-shrink:0; margin-top:2px; position:relative; }
+.price-features li::before { background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Ccircle cx='8' cy='8' r='8' fill='url(%23g)'/%3E%3Cpath d='M4.5 8l2.5 2.5L11 5.5' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='16' y2='16'%3E%3Cstop stop-color='%234f7fff'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E") no-repeat center; }
+.price-cta { display: block; text-align: center; margin-top: 28px; padding: 14px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+.price-cta-primary { background: linear-gradient(135deg, var(--accent), var(--accent2)); color: #fff; }
+.price-cta-primary:hover { box-shadow: 0 0 30px rgba(79,127,255,0.4); transform: translateY(-2px); }
+.price-cta-secondary { border: 1px solid var(--border); color: var(--text); }
+.price-cta-secondary:hover { border-color: var(--accent); }
+
+/* CTA SECTION */
+.svc-cta-section {
+  position: relative; z-index: 1; background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+  border-top: 1px solid var(--border);
+}
+.svc-cta-inner {
+  max-width: 700px; margin: 0 auto; text-align: center; padding: 100px 40px;
+}
+.svc-cta-inner h2 { font-size: clamp(28px,4vw,48px); font-weight: 900; letter-spacing: -1.5px; margin-bottom: 20px; }
+.svc-cta-inner p { font-size: 17px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; }
+.svc-cta-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* FOOTER */
+footer { background: var(--bg); border-top: 1px solid var(--border); padding: 40px 80px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; position: relative; z-index: 1; }
+.footer-brand { font-size: 18px; font-weight: 900; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+footer p { font-size: 13px; color: var(--muted); }
+@media (max-width: 768px) { footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; } }
+
+/* PAGE ENTRANCE */
+body[data-page="service"] .page-enter { opacity: 0; transform: translateY(30px); }
+
+/* SAVANNA SIDE ELEMENTS */
+.sav-side {
+  position: fixed; top: 0; bottom: 0; width: 120px; pointer-events: none; z-index: 1; overflow: hidden;
+}
+.sav-left { left: 0; }
+.sav-right { right: 0; transform: scaleX(-1); }
+@media (max-width: 1400px) { .sav-side { display: none; } }
+</style>
+</head>
+<body data-page="service">
+
+<!-- Cinema transition elements -->
+<div id="cinema-panel"></div>
+<div id="cinema-bar-t"></div>
+<div id="cinema-bar-b"></div>
+
+<!-- Cursor -->
+<div id="cur-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="42" height="42">
+    <defs>
+      <linearGradient id="lg-cur-gold-w" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f5e3a3"/>
+        <stop offset="50%" stop-color="#d4af37"/>
+        <stop offset="100%" stop-color="#b8860b"/>
+      </linearGradient>
+      <linearGradient id="lg-cur-blue-w" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#4f7fff"/>
+        <stop offset="100%" stop-color="#a855f7"/>
+      </linearGradient>
+    </defs>
+    <ellipse cx="100" cy="115" rx="52" ry="44" fill="url(#lg-cur-gold-w)"/>
+    <rect x="72" y="130" width="12" height="28" rx="6" fill="url(#lg-cur-gold-w)"/>
+    <rect x="116" y="130" width="12" height="28" rx="6" fill="url(#lg-cur-gold-w)"/>
+    <ellipse cx="100" cy="88" rx="38" ry="35" fill="url(#lg-cur-gold-w)"/>
+    <circle cx="72" cy="70" r="22" fill="url(#lg-cur-gold-w)"/>
+    <circle cx="128" cy="70" r="22" fill="url(#lg-cur-gold-w)"/>
+    <ellipse cx="100" cy="85" rx="28" ry="26" fill="#c49b2a"/>
+    <circle cx="88" cy="82" r="5" fill="url(#lg-cur-blue-w)"/>
+    <circle cx="112" cy="82" r="5" fill="url(#lg-cur-blue-w)"/>
+    <ellipse cx="100" cy="94" rx="8" ry="5" fill="#a07820"/>
+    <path d="M85 105 Q100 112 115 105" stroke="#a07820" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M62 52 Q58 38 68 36 Q72 46 68 54" fill="url(#lg-cur-gold-w)"/>
+    <path d="M138 52 Q142 38 132 36 Q128 46 132 54" fill="url(#lg-cur-gold-w)"/>
+  </svg>
+</div>
+<div id="mouse-glow"></div>
+
+<!-- Ambient orbs -->
+<div class="amb-orb amb-orb-1"></div>
+<div class="amb-orb amb-orb-2"></div>
+
+<!-- Savanna side panels -->
+<div class="sav-side sav-left" aria-hidden="true">
+  <svg width="120" height="100%" viewBox="0 0 120 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="height:100vh;position:sticky;top:0;">
+    <defs>
+      <linearGradient id="grassG-w" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#8b6914" stop-opacity="0.2"/>
+      </linearGradient>
+    </defs>
+    <!-- Tall grass blades left -->
+    <path d="M15 900 Q12 700 18 500 Q22 350 10 200" stroke="url(#grassG-w)" stroke-width="2.5" fill="none" opacity="0.5"/>
+    <path d="M28 900 Q24 680 30 480 Q35 320 20 150" stroke="url(#grassG-w)" stroke-width="2" fill="none" opacity="0.4"/>
+    <path d="M40 900 Q38 720 44 520 Q48 380 35 220" stroke="url(#grassG-w)" stroke-width="1.5" fill="none" opacity="0.35"/>
+    <path d="M55 900 Q50 750 56 560 Q60 420 48 280" stroke="url(#grassG-w)" stroke-width="2" fill="none" opacity="0.3"/>
+    <path d="M8 900 Q5 780 12 600 Q16 460 5 320" stroke="url(#grassG-w)" stroke-width="1.5" fill="none" opacity="0.25"/>
+    <!-- Acacia silhouette -->
+    <line x1="30" y1="900" x2="30" y2="560" stroke="#8b6914" stroke-width="5" opacity="0.25"/>
+    <line x1="30" y1="700" x2="5" y2="640" stroke="#8b6914" stroke-width="3" opacity="0.2"/>
+    <line x1="30" y1="680" x2="65" y2="610" stroke="#8b6914" stroke-width="3" opacity="0.2"/>
+    <ellipse cx="20" cy="610" rx="30" ry="14" fill="#8b6914" opacity="0.12"/>
+    <ellipse cx="60" cy="585" rx="28" ry="12" fill="#8b6914" opacity="0.1"/>
+    <ellipse cx="30" cy="555" rx="36" ry="16" fill="#8b6914" opacity="0.1"/>
+  </svg>
+</div>
+<div class="sav-side sav-right" aria-hidden="true">
+  <svg width="120" height="100%" viewBox="0 0 120 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="height:100vh;position:sticky;top:0;">
+    <defs>
+      <linearGradient id="grassG-wr" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.7"/>
+        <stop offset="100%" stop-color="#8b6914" stop-opacity="0.2"/>
+      </linearGradient>
+    </defs>
+    <path d="M15 900 Q12 700 18 500 Q22 350 10 200" stroke="url(#grassG-wr)" stroke-width="2.5" fill="none" opacity="0.5"/>
+    <path d="M28 900 Q24 680 30 480 Q35 320 20 150" stroke="url(#grassG-wr)" stroke-width="2" fill="none" opacity="0.4"/>
+    <path d="M40 900 Q38 720 44 520 Q48 380 35 220" stroke="url(#grassG-wr)" stroke-width="1.5" fill="none" opacity="0.35"/>
+    <path d="M55 900 Q50 750 56 560 Q60 420 48 280" stroke="url(#grassG-wr)" stroke-width="2" fill="none" opacity="0.3"/>
+    <path d="M70 900 Q68 760 74 580 Q78 440 66 300" stroke="url(#grassG-wr)" stroke-width="1.5" fill="none" opacity="0.25"/>
+    <line x1="30" y1="900" x2="30" y2="560" stroke="#8b6914" stroke-width="5" opacity="0.25"/>
+    <line x1="30" y1="700" x2="5" y2="640" stroke="#8b6914" stroke-width="3" opacity="0.2"/>
+    <line x1="30" y1="680" x2="65" y2="610" stroke="#8b6914" stroke-width="3" opacity="0.2"/>
+    <ellipse cx="20" cy="610" rx="30" ry="14" fill="#8b6914" opacity="0.12"/>
+    <ellipse cx="60" cy="585" rx="28" ry="12" fill="#8b6914" opacity="0.1"/>
+    <ellipse cx="30" cy="555" rx="36" ry="16" fill="#8b6914" opacity="0.1"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back service-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    <span>Volver</span>
+  </a>
+  <a href="index.html" class="nav-logo service-link">
+    <span class="nav-logo-text">SIMBAI</span>
+  </a>
+  <a href="index.html#cta" class="nav-cta service-link">Solicitar web</a>
+</nav>
+
+<!-- HERO -->
+<section style="position:relative;z-index:1;">
+  <div class="svc-hero page-enter">
+    <div class="svc-hero-left">
+      <div class="svc-hero-badge">Webs Premium</div>
+      <h1>Tu web.<br><span class="accent-grad">Que convierte.</span><br>De verdad.</h1>
+      <p class="svc-hero-sub">Webs de alto impacto con efectos de scroll cinematograficos, carga rapida y estructura pensada para convertir visitantes en clientes. No plantillas, no genericas.</p>
+      <div class="svc-hero-ctas">
+        <a href="index.html#cta" class="btn-accent service-link">Quiero mi web</a>
+        <a href="#precios" class="btn-ghost">Ver precios</a>
+      </div>
+      <div class="scroll-anim-hint">
+        <div class="scroll-anim-track"><div class="scroll-anim-dot"></div></div>
+        Scroll effects incluidos
+      </div>
+      <div class="svc-stats">
+        <div class="svc-stat"><div class="svc-stat-num">7d</div><div class="svc-stat-lbl">Entrega</div></div>
+        <div class="svc-stat"><div class="svc-stat-num">+180%</div><div class="svc-stat-lbl">Conversion media</div></div>
+        <div class="svc-stat"><div class="svc-stat-num">249€</div><div class="svc-stat-lbl">Desde</div></div>
+      </div>
+    </div>
+
+    <div class="browser-wrap svc-hero-right">
+      <div class="browser-mockup">
+        <div class="browser-bar">
+          <div class="browser-dots">
+            <div class="browser-dot"></div>
+            <div class="browser-dot"></div>
+            <div class="browser-dot"></div>
+          </div>
+          <div class="browser-url">simbai.es — Tu negocio</div>
+        </div>
+        <div class="browser-content">
+          <svg viewBox="0 0 480 320" xmlns="http://www.w3.org/2000/svg" class="page-preview">
+            <defs>
+              <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#4f7fff"/>
+                <stop offset="100%" stop-color="#a855f7"/>
+              </linearGradient>
+              <linearGradient id="heroGrad2" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#a855f7"/>
+                <stop offset="100%" stop-color="#ec4899"/>
+              </linearGradient>
+              <clipPath id="browserClip"><rect width="480" height="320" rx="0"/></clipPath>
+            </defs>
+            <g clip-path="url(#browserClip)">
+              <!-- Background -->
+              <rect width="480" height="320" fill="#07090f"/>
+              <!-- Grid lines -->
+              <line x1="0" y1="80" x2="480" y2="80" stroke="#1e2d45" stroke-width="0.5" opacity="0.5"/>
+              <!-- Nav -->
+              <rect width="480" height="36" fill="#0c1120" opacity="0.9"/>
+              <text x="20" y="23" font-family="Inter,sans-serif" font-size="11" font-weight="900" fill="url(#heroGrad)">SIMBAI</text>
+              <rect x="200" y="13" width="20" height="3" rx="1.5" fill="#1e2d45"/>
+              <rect x="228" y="13" width="20" height="3" rx="1.5" fill="#1e2d45"/>
+              <rect x="256" y="13" width="20" height="3" rx="1.5" fill="#1e2d45"/>
+              <rect x="418" y="11" width="42" height="15" rx="7.5" fill="url(#heroGrad)" opacity="0.9"/>
+              <!-- Hero content -->
+              <text x="40" y="75" font-family="Inter,sans-serif" font-size="22" font-weight="900" fill="url(#heroGrad)">Tu web.</text>
+              <text x="40" y="102" font-family="Inter,sans-serif" font-size="22" font-weight="900" fill="url(#heroGrad2)">Que convierte.</text>
+              <rect x="40" y="115" width="200" height="4" rx="2" fill="#1e2d45"/>
+              <rect x="40" y="124" width="160" height="4" rx="2" fill="#1e2d45"/>
+              <rect x="40" y="143" width="80" height="22" rx="11" fill="url(#heroGrad)"/>
+              <rect x="130" y="143" width="70" height="22" rx="11" fill="none" stroke="#1e2d45" stroke-width="1"/>
+              <!-- Browser window in preview -->
+              <rect x="280" y="50" width="175" height="130" rx="8" fill="#0d1117" stroke="#1e2d45" stroke-width="1"/>
+              <rect x="280" y="50" width="175" height="18" rx="8" fill="#161b22"/>
+              <rect x="280" y="58" width="175" height="10" rx="0" fill="#161b22"/>
+              <circle cx="293" cy="59" r="3" fill="#ff5f57"/>
+              <circle cx="303" cy="59" r="3" fill="#febc2e"/>
+              <circle cx="313" cy="59" r="3" fill="#28c840"/>
+              <rect x="330" y="55" width="110" height="8" rx="4" fill="#0d1117"/>
+              <!-- Mini hero in nested browser -->
+              <rect x="282" y="70" width="171" height="108" fill="#07090f"/>
+              <rect x="292" y="82" width="80" height="6" rx="3" fill="url(#heroGrad)" opacity="0.8"/>
+              <rect x="292" y="94" width="60" height="6" rx="3" fill="url(#heroGrad2)" opacity="0.8"/>
+              <rect x="292" y="108" width="110" height="3" rx="1.5" fill="#1e2d45"/>
+              <rect x="292" y="115" width="90" height="3" rx="1.5" fill="#1e2d45"/>
+              <rect x="292" y="129" width="40" height="12" rx="6" fill="url(#heroGrad)"/>
+              <rect x="338" y="129" width="34" height="12" rx="6" fill="none" stroke="#1e2d45" stroke-width="0.8"/>
+              <!-- Floating cards -->
+              <rect x="30" y="195" width="125" height="60" rx="10" fill="#111827" stroke="#1e2d45" stroke-width="1"/>
+              <rect x="42" y="207" width="16" height="16" rx="5" fill="rgba(79,127,255,0.2)"/>
+              <rect x="66" y="210" width="70" height="4" rx="2" fill="#1e2d45"/>
+              <rect x="66" y="219" width="50" height="3" rx="1.5" fill="#0d1117"/>
+              <rect x="42" y="232" width="90" height="3" rx="1.5" fill="#1e2d45" opacity="0.5"/>
+              <rect x="42" y="239" width="70" height="3" rx="1.5" fill="#1e2d45" opacity="0.3"/>
+              <rect x="170" y="195" width="125" height="60" rx="10" fill="#111827" stroke="#1e2d45" stroke-width="1"/>
+              <rect x="182" y="207" width="16" height="16" rx="5" fill="rgba(168,85,247,0.2)"/>
+              <rect x="206" y="210" width="70" height="4" rx="2" fill="#1e2d45"/>
+              <rect x="206" y="219" width="50" height="3" rx="1.5" fill="#0d1117"/>
+              <rect x="182" y="232" width="90" height="3" rx="1.5" fill="#1e2d45" opacity="0.5"/>
+              <rect x="182" y="239" width="70" height="3" rx="1.5" fill="#1e2d45" opacity="0.3"/>
+              <rect x="310" y="195" width="125" height="60" rx="10" fill="#111827" stroke="#1e2d45" stroke-width="1"/>
+              <rect x="322" y="207" width="16" height="16" rx="5" fill="rgba(16,185,129,0.2)"/>
+              <rect x="346" y="210" width="70" height="4" rx="2" fill="#1e2d45"/>
+              <rect x="346" y="219" width="50" height="3" rx="1.5" fill="#0d1117"/>
+              <rect x="322" y="232" width="90" height="3" rx="1.5" fill="#1e2d45" opacity="0.5"/>
+              <rect x="322" y="239" width="70" height="3" rx="1.5" fill="#1e2d45" opacity="0.3"/>
+              <!-- Speed indicator -->
+              <rect x="380" y="275" width="80" height="28" rx="8" fill="#111827" stroke="#1e2d45" stroke-width="1"/>
+              <text x="390" y="284" font-family="Inter,sans-serif" font-size="7" fill="#6b7a9c">PageSpeed</text>
+              <text x="390" y="296" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#10b981">98 / 100</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EFFECTS SECTION -->
+<section style="position:relative;z-index:1;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="svc-section">
+    <div class="section-tag">Efectos visuales</div>
+    <h2 class="section-title">Animaciones que<br><span class="accent-grad">venden</span></h2>
+    <p class="section-sub">Cada web incluye efectos de scroll diseñados para retener, sorprender y guiar al visitante hacia la conversion.</p>
+    <div class="effects-showcase">
+      <div class="effect-card">
+        <div class="demo-parallax">
+          <div class="parallax-layer pl-1"></div>
+          <div class="parallax-layer pl-2"></div>
+          <div class="parallax-layer pl-3"></div>
+        </div>
+        <div class="effect-label">Parallax scroll</div>
+      </div>
+      <div class="effect-card">
+        <div class="demo-text-reveal">
+          <div class="reveal-line"><div class="reveal-line-inner"></div></div>
+          <div class="reveal-line"><div class="reveal-line-inner"></div></div>
+          <div class="reveal-line"><div class="reveal-line-inner"></div></div>
+          <div class="reveal-line"><div class="reveal-line-inner"></div></div>
+        </div>
+        <div class="effect-label">Text reveal</div>
+      </div>
+      <div class="effect-card">
+        <div class="demo-pin">
+          <div class="pin-card">
+            <div class="pin-card-line"></div>
+            <div class="pin-card-line"></div>
+            <div class="pin-card-line"></div>
+          </div>
+        </div>
+        <div class="effect-label">Pin scroll</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section style="position:relative;z-index:1;">
+  <div class="svc-section">
+    <div class="section-tag">Incluido en toda web</div>
+    <h2 class="section-title">Todo lo que necesitas,<br><span class="accent-grad">sin pagar extra</span></h2>
+    <p class="section-sub">Cada proyecto incluye de base lo que otras agencias cobran como "premium".</p>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <h3>Scroll effects GSAP</h3>
+        <p>Animaciones de entrada, parallax, pin scroll y reveal text con GSAP 3, la libreria profesional.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round">
+            <rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>
+          </svg>
+        </div>
+        <h3>100% responsive</h3>
+        <p>Adaptada a movil, tablet y escritorio desde el primer pixel. Google te premia, los usuarios tambien.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round">
+            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+          </svg>
+        </div>
+        <h3>SEO tecnico incluido</h3>
+        <p>Schema.org, meta tags, Open Graph, canonical URLs, sitemap y velocidad optimizada desde el codigo.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+        <h3>Carga ultra rapida</h3>
+        <p>Codigo limpio sin dependencias innecesarias. PageSpeed 90+ en movil, 98+ en escritorio habitual.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3>Formulario + CRM</h3>
+        <p>Formulario de contacto integrado con n8n para notificarte por WhatsApp o email en menos de 30 segundos.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3>SSL + Dominio</h3>
+        <p>Configuracion completa en Hostinger o Vercel con HTTPS, dominio propio y renovacion automatica.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section style="position:relative;z-index:1;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="svc-section">
+    <div class="section-tag">Como trabajamos</div>
+    <h2 class="section-title">Tu web en <span class="accent-grad">7 dias</span></h2>
+    <p class="section-sub">Proceso claro, sin sorpresas y con entrega garantizada.</p>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="ps-num">1</div>
+        <div class="ps-content">
+          <h3>Brief en 20 minutos</h3>
+          <p>Una llamada rapida para entender tu negocio, tu cliente ideal y que quieres que haga tu web. Sin formularios eternos.</p>
+          <span class="ps-badge">Dia 1</span>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">2</div>
+        <div class="ps-content">
+          <h3>Diseno y estructura</h3>
+          <p>Elegimos la estetica, el tono visual y la estructura de secciones. Ves el wireframe antes de que empiece el codigo.</p>
+          <span class="ps-badge">Dias 2-3</span>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">3</div>
+        <div class="ps-content">
+          <h3>Desarrollo y animaciones</h3>
+          <p>Codigo limpio, animaciones GSAP, formulario conectado, SEO tecnico. Todo en HTML/CSS/JS, sin WordPress.</p>
+          <span class="ps-badge">Dias 4-6</span>
+        </div>
+      </div>
+      <div class="process-step">
+        <div class="ps-num">4</div>
+        <div class="ps-content">
+          <h3>Revision y deploy</h3>
+          <p>Te enviamos el resultado, hacemos tus ajustes y publicamos en tu dominio. Incluye formacion basica para editar textos.</p>
+          <span class="ps-badge">Dia 7</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="precios" style="position:relative;z-index:1;">
+  <div class="svc-section">
+    <div class="section-tag">Precios</div>
+    <h2 class="section-title">Transparentes.<br><span class="accent-grad">Sin letra pequena.</span></h2>
+    <p class="section-sub">Lo que ves es lo que pagas. Sin costes ocultos, sin sorpresas al final.</p>
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Web Esencial</div>
+        <div class="price-amount accent-grad">249€</div>
+        <div class="price-period">pago unico · entrega en 5 dias</div>
+        <ul class="price-features">
+          <li>Hasta 5 secciones</li>
+          <li>Diseno personalizado</li>
+          <li>Scroll effects basicos</li>
+          <li>100% responsive</li>
+          <li>Formulario de contacto</li>
+          <li>SEO tecnico basico</li>
+          <li>Deploy en tu dominio</li>
+        </ul>
+        <a href="index.html#cta" class="price-cta price-cta-secondary service-link">Solicitar</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-badge">Mas elegido</div>
+        <div class="price-name">Web Premium</div>
+        <div class="price-amount accent-grad">449€</div>
+        <div class="price-period">pago unico · entrega en 7 dias</div>
+        <ul class="price-features">
+          <li>Secciones ilimitadas</li>
+          <li>Efectos scroll avanzados GSAP</li>
+          <li>Parallax + Pin + Reveal</li>
+          <li>Formulario + notif. WhatsApp</li>
+          <li>SEO tecnico completo</li>
+          <li>PageSpeed 90+</li>
+          <li>Mantenimiento 20€/mes</li>
+        </ul>
+        <a href="index.html#cta" class="price-cta price-cta-primary service-link">Lo quiero</a>
+      </div>
+      <div class="price-card">
+        <div class="price-name">Web + Landing Ads</div>
+        <div class="price-amount accent-grad">680€</div>
+        <div class="price-period">pago unico · entrega en 10 dias</div>
+        <ul class="price-features">
+          <li>Web Premium incluida</li>
+          <li>Landing page de conversion</li>
+          <li>A/B testing basico</li>
+          <li>Pixel Meta + GA4 instalado</li>
+          <li>Optimizada para campanas</li>
+          <li>Formulario con CRM</li>
+          <li>1 mes soporte incluido</li>
+        </ul>
+        <a href="index.html#cta" class="price-cta price-cta-secondary service-link">Solicitar</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="svc-cta-section">
+  <div class="svc-cta-inner">
+    <h2>Hablamos esta semana,<br><span class="accent-grad">publicamos la proxima.</span></h2>
+    <p>Sin reunion de ventas. Sin propuesta de 40 paginas. Una llamada de 20 minutos y empezamos.</p>
+    <div class="svc-cta-btns">
+      <a href="index.html#cta" class="btn-accent service-link">Contactar ahora</a>
+      <a href="index.html" class="btn-ghost service-link">Ver todos los servicios</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="footer-brand">SIMBAI</span>
+  <p>Webs que trabajan mientras tu duermes.</p>
+  <p style="color:var(--muted);font-size:12px;">roldesluis@gmail.com</p>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* CINEMATIC ENTRANCE */
+(function(){
+  const panel = document.getElementById('cinema-panel');
+  const bt = document.getElementById('cinema-bar-t');
+  const bb = document.getElementById('cinema-bar-b');
+  if (!panel) return;
+
+  const tl = gsap.timeline({ defaults: { ease: 'power3.inOut' } });
+  tl.set([bt, bb], { height: 60 })
+    .to(panel, { x: '-100%', duration: 0.85 }, 0)
+    .to([bt, bb], { height: 0, duration: 0.4 }, 0.6)
+    .fromTo('.page-enter', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 }, 0.55);
+})();
+
+/* CINEMATIC EXIT */
+document.querySelectorAll('.service-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+    if (!href || href.startsWith('#')) return;
+    e.preventDefault();
+    const panel = document.getElementById('cinema-panel');
+    const bt = document.getElementById('cinema-bar-t');
+    const bb = document.getElementById('cinema-bar-b');
+    const tl = gsap.timeline({ onComplete: () => { window.location.href = href; } });
+    tl.set([bt, bb], { height: 0 })
+      .to([bt, bb], { height: 60, duration: 0.35, ease: 'power3.in' }, 0)
+      .fromTo(panel, { x: '100%' }, { x: '0%', duration: 0.6, ease: 'power3.in' }, 0.1);
+  });
+});
+
+/* CURSOR */
+(function(){
+  const logo = document.getElementById('cur-logo');
+  const glow = document.getElementById('mouse-glow');
+  if (!logo || window.matchMedia('(max-width:900px)').matches) return;
+  let mx = 0, my = 0, rx = 0, ry = 0, gx = 0, gy = 0, rot = 0, trot = 0;
+  document.addEventListener('mousemove', e => {
+    const dx = e.clientX - mx, dy = e.clientY - my;
+    mx = e.clientX; my = e.clientY;
+    trot = Math.max(-15, Math.min(15, Math.atan2(dy, dx) * (180/Math.PI) * 0.07));
+  });
+  document.addEventListener('mousedown', () => logo.classList.add('click'));
+  document.addEventListener('mouseup', () => logo.classList.remove('click'));
+  document.querySelectorAll('a, button, .feat-card, .price-card, .effect-card').forEach(el => {
+    el.addEventListener('mouseenter', () => { if (!logo.classList.contains('click')) logo.classList.add('hvr'); });
+    el.addEventListener('mouseleave', () => logo.classList.remove('hvr'));
+  });
+  function lerp(a, b, t) { return a + (b-a)*t; }
+  (function tick() {
+    rx = lerp(rx, mx, 0.12); ry = lerp(ry, my, 0.12);
+    gx = lerp(gx, mx, 0.045); gy = lerp(gy, my, 0.045);
+    rot = lerp(rot, trot, 0.08);
+    logo.style.left = rx + 'px'; logo.style.top = ry + 'px';
+    logo.style.transform = `translate(-50%,-50%) rotate(${rot}deg)`;
+    if (glow) { glow.style.left = gx + 'px'; glow.style.top = gy + 'px'; glow.style.transform = 'translate(-50%,-50%)'; }
+    requestAnimationFrame(tick);
+  })();
+})();
+
+/* SCROLL ANIMATIONS */
+gsap.fromTo('.feat-card', { opacity: 0, y: 40 }, {
+  opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'back.out(1.2)',
+  scrollTrigger: { trigger: '.feat-grid', start: 'top 88%' }
+});
+gsap.fromTo('.process-step', { opacity: 0, x: -30 }, {
+  opacity: 1, x: 0, duration: 0.6, stagger: 0.15, ease: 'power2.out',
+  scrollTrigger: { trigger: '.process-steps', start: 'top 88%' }
+});
+gsap.fromTo('.price-card', { opacity: 0, y: 40, scale: 0.96 }, {
+  opacity: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.12, ease: 'back.out(1.2)',
+  scrollTrigger: { trigger: '.pricing-grid', start: 'top 88%' }
+});
+gsap.fromTo('.effect-card', { opacity: 0, scale: 0.92 }, {
+  opacity: 1, scale: 1, duration: 0.6, stagger: 0.15, ease: 'back.out(1.3)',
+  scrollTrigger: { trigger: '.effects-showcase', start: 'top 88%' }
+});
+
+/* PARTICLES in demo */
+(function() {
+  const container = document.querySelector('.demo-particles');
+  if (!container) return;
+  const colors = ['rgba(79,127,255,0.6)', 'rgba(168,85,247,0.6)', 'rgba(236,72,153,0.5)', 'rgba(212,175,55,0.5)'];
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 6 + 2;
+    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*4}s;`;
+    container.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>

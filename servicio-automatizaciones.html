@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Automatizaciones n8n — SIMBAI | Flujos que trabajan por ti</title>
+<meta name="description" content="Automatizaciones con n8n e IA para pymes y autónomos. Emails, CRM, WhatsApp, APIs y más. Desde 125€. Entrega en 24-48h.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.umd.min.js"></script>
+<style>
+:root {
+  --bg:#07090f; --bg2:#0c1120; --card:#111827; --border:#1e2d45;
+  --accent:#a855f7; --accent2:#6366f1; --gold:#d4af37; --gold2:#f5e3a3;
+  --green:#10b981; --text:#e2e8f4; --muted:#6b7a9c;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+@media(min-width:901px){body,body *,body a,body button{cursor:none!important}}
+
+/* CURSOR */
+#cur-logo{position:fixed;width:42px;height:42px;pointer-events:none;z-index:9998;top:-100px;left:-100px;filter:drop-shadow(0 0 10px rgba(168,85,247,0.6)) drop-shadow(0 0 24px rgba(99,102,241,0.3));transition:width .25s,height .25s,filter .3s;will-change:left,top,transform}
+#cur-logo.hvr{width:58px;height:58px;filter:drop-shadow(0 0 22px rgba(168,85,247,1)) drop-shadow(0 0 40px rgba(99,102,241,0.6))}
+#cur-logo.click{width:30px;height:30px}
+@media(max-width:900px){#cur-logo{display:none}}
+
+/* CINEMA CURTAIN */
+#cinema-panel{position:fixed;top:0;left:0;width:100%;height:100%;background:#07090f;z-index:9500;transform:translateX(0);pointer-events:none}
+#cinema-bar-t{position:fixed;top:0;left:0;width:100%;height:10vh;background:#000;z-index:9501;transform:translateY(-100%);pointer-events:none}
+#cinema-bar-b{position:fixed;bottom:0;left:0;width:100%;height:10vh;background:#000;z-index:9501;transform:translateY(100%);pointer-events:none}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 60px;background:rgba(7,9,15,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);transition:padding .3s}
+nav.scrolled{padding:14px 60px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo svg{width:28px;height:28px;flex-shrink:0}
+.nav-logo-text{font-size:20px;font-weight:900;letter-spacing:-0.5px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.nav-back{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:500;text-decoration:none;transition:color .2s}
+.nav-back:hover{color:var(--text)}
+.nav-cta{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity .2s,transform .2s}
+.nav-cta:hover{opacity:.85;transform:translateY(-1px)}
+@media(max-width:768px){nav{padding:16px 24px}}
+
+/* HERO */
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 40px 80px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(168,85,247,0.12) 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,rgba(99,102,241,0.08) 0%,transparent 50%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.3);border-radius:50px;padding:6px 16px;font-size:13px;color:var(--accent);font-weight:500;margin-bottom:32px}
+.hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.8)}}
+h1{font-size:clamp(36px,6vw,76px);font-weight:900;line-height:1.05;letter-spacing:-2px;max-width:860px;margin-bottom:24px}
+.gradient-text{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.hero-sub{font-size:clamp(15px,2.2vw,19px);color:var(--muted);max-width:580px;line-height:1.75;margin-bottom:48px}
+.hero-price-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.25);border-radius:14px;padding:12px 24px;margin-bottom:48px}
+.hero-price-from{font-size:13px;color:var(--muted)}
+.hero-price-num{font-size:28px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.hero-price-suffix{font-size:13px;color:var(--muted)}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:8px}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:16px 36px;border-radius:50px;font-size:16px;font-weight:600;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 0 30px rgba(168,85,247,0.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(168,85,247,0.5)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);padding:16px 36px;border-radius:50px;font-size:16px;font-weight:500;text-decoration:none;transition:border-color .2s,background .2s}
+.btn-secondary:hover{border-color:var(--accent);background:rgba(168,85,247,0.05)}
+
+/* FLOW SVG ANIMATION */
+.flow-visual{position:relative;width:min(520px,90vw);margin:60px auto 0}
+.flow-svg{width:100%;height:auto;filter:drop-shadow(0 0 30px rgba(168,85,247,0.3))}
+@keyframes data-flow{0%{stroke-dashoffset:200}100%{stroke-dashoffset:0}}
+.flow-path{stroke-dasharray:200;stroke-dashoffset:200;animation:data-flow 2s linear infinite}
+.flow-node{animation:node-pulse 2.5s ease-in-out infinite}
+@keyframes node-pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.08)}}
+
+/* SECTIONS */
+section{position:relative;z-index:1}
+.section-inner{max-width:1100px;margin:0 auto;padding:100px 40px}
+.section-tag{display:inline-block;background:rgba(168,85,247,0.1);border:1px solid rgba(168,85,247,0.25);border-radius:50px;padding:4px 14px;font-size:12px;color:var(--accent);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+.section-title{font-size:clamp(26px,4vw,48px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
+.section-sub{font-size:17px;color:var(--muted);line-height:1.7;max-width:540px}
+
+/* USE CASES GRID */
+#use-cases{background:var(--bg2)}
+.cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:56px}
+.case-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
+.case-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s}
+.case-card:hover{border-color:rgba(168,85,247,0.4);transform:translateY(-4px)}
+.case-card:hover::before{opacity:1}
+.case-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.case-icon svg{width:20px;height:20px}
+.case-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.case-card p{font-size:14px;color:var(--muted);line-height:1.65}
+
+/* WHAT INCLUDED */
+#included{background:var(--bg)}
+.included-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:56px}
+.included-item{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;display:flex;gap:16px;align-items:flex-start;transition:border-color .2s}
+.included-item:hover{border-color:rgba(168,85,247,0.3)}
+.inc-check{width:36px;height:36px;border-radius:10px;background:rgba(168,85,247,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.inc-check svg{width:16px;height:16px}
+.inc-text h4{font-size:15px;font-weight:700;margin-bottom:4px}
+.inc-text p{font-size:13px;color:var(--muted);line-height:1.5}
+
+/* PRICING */
+#pricing{background:var(--bg2)}
+.price-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:56px}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px 32px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .35s}
+.price-card:hover{transform:translateY(-8px);box-shadow:0 40px 80px rgba(0,0,0,.4)}
+.price-card.featured{border-color:rgba(168,85,247,0.5);box-shadow:0 0 0 1px rgba(168,85,247,.25),0 20px 60px rgba(168,85,247,.12)}
+.price-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent);opacity:1}
+.price-card-name{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.price-amount{font-size:52px;font-weight:900;letter-spacing:-3px;line-height:1;margin-bottom:4px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.price-suffix{font-size:13px;color:var(--muted);margin-bottom:20px}
+.price-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;flex:1}
+.price-features li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text);line-height:1.5}
+.price-features li svg{width:16px;height:16px;flex-shrink:0;margin-top:1px}
+.price-cta{display:block;text-align:center;padding:14px 24px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:all .2s;border:none;font-family:inherit;cursor:pointer}
+.price-cta.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 0 30px rgba(168,85,247,.25)}
+.price-cta.primary:hover{box-shadow:0 0 50px rgba(168,85,247,.5);transform:translateY(-1px)}
+.price-cta.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.price-cta.ghost:hover{border-color:var(--accent);background:rgba(168,85,247,.05)}
+
+/* CTA */
+#cta-section{background:radial-gradient(ellipse at center,rgba(168,85,247,0.12) 0%,transparent 70%);text-align:center}
+#cta-section h2{font-size:clamp(28px,4vw,56px);font-weight:900;letter-spacing:-2px;line-height:1.1;margin-bottom:20px}
+#cta-section p{font-size:17px;color:var(--muted);margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.footer-logo-text{font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.footer-copy{font-size:13px;color:var(--muted)}
+.footer-email{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s}
+.footer-email:hover{color:var(--accent)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .section-inner{padding:72px 24px}
+  .included-grid{grid-template-columns:1fr}
+  footer{padding:32px 24px;flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body data-page="service">
+
+<!-- CINEMA -->
+<div id="cinema-panel"></div>
+<div id="cinema-bar-t"></div>
+<div id="cinema-bar-b"></div>
+
+<!-- CURSOR -->
+<div id="cur-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="42" height="42">
+    <defs>
+      <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#f5e3a3"/><stop offset="40%" stop-color="#d4af37"/><stop offset="100%" stop-color="#8b6508"/>
+      </linearGradient>
+      <linearGradient id="cb" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#6366f1"/>
+      </linearGradient>
+    </defs>
+    <polygon points="100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43" fill="url(#cg)"/>
+    <polygon points="100,50 140,70 150,112 128,144 100,154 72,144 50,112 60,70" fill="url(#cb)" opacity="0.95"/>
+    <ellipse cx="77" cy="90" rx="11" ry="13" fill="#fff" opacity=".95"/><ellipse cx="123" cy="90" rx="11" ry="13" fill="#fff" opacity=".95"/>
+    <ellipse cx="77" cy="91" rx="6.5" ry="8" fill="#07090f"/><ellipse cx="123" cy="91" rx="6.5" ry="8" fill="#07090f"/>
+    <ellipse cx="79" cy="89" rx="2.5" ry="2.5" fill="#fff" opacity=".9"/><ellipse cx="125" cy="89" rx="2.5" ry="2.5" fill="#fff" opacity=".9"/>
+    <polygon points="100,104 108,112 100,122 92,112" fill="#07090f" opacity=".75"/>
+  </svg>
+</div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="nl" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs>
+      <polygon points="100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43" fill="url(#nl)" opacity=".9"/>
+      <polygon points="100,50 140,70 150,112 128,144 100,154 72,144 50,112 60,70" fill="url(#nl)"/>
+      <ellipse cx="77" cy="90" rx="10" ry="12" fill="#fff" opacity=".95"/><ellipse cx="123" cy="90" rx="10" ry="12" fill="#fff" opacity=".95"/>
+      <ellipse cx="77" cy="91" rx="6" ry="7.5" fill="#07090f"/><ellipse cx="123" cy="91" rx="6" ry="7.5" fill="#07090f"/>
+    </svg>
+    <span class="nav-logo-text">SIMBAI</span>
+  </a>
+  <a href="index.html" class="nav-back service-link">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Volver
+  </a>
+  <a href="index.html#cta" class="nav-cta service-link">Solicitar proyecto</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tag"><span class="dot"></span>Automatizaciones n8n + IA</div>
+  <h1 id="hero-h1">Flujos que trabajan<br><span class="gradient-text">mientras duermes</span></h1>
+  <p class="hero-sub" id="hero-sub">Emails automáticos, CRM sincronizado, alertas en tiempo real, WhatsApp Business, APIs conectadas. Todo funcionando solo, sin intervención manual.</p>
+  <div class="hero-price-badge" id="hero-badge">
+    <span class="hero-price-from">desde</span>
+    <span class="hero-price-num">125€</span>
+    <span class="hero-price-suffix">· entrega en 24-48h</span>
+  </div>
+  <div class="hero-actions" id="hero-actions">
+    <a href="index.html#cta" class="btn-primary service-link">Quiero mi automatización</a>
+    <a href="#pricing" class="btn-secondary">Ver precios</a>
+  </div>
+  <div class="flow-visual" id="flow-visual">
+    <svg class="flow-svg" viewBox="0 0 520 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background -->
+      <rect width="520" height="300" rx="20" fill="#0c1120" stroke="#1e2d45" stroke-width="1"/>
+      <!-- Nodes -->
+      <rect x="30" y="120" width="80" height="60" rx="10" fill="#1a1040" stroke="#a855f7" stroke-width="1.5" class="flow-node" style="animation-delay:0s"/>
+      <text x="70" y="147" text-anchor="middle" fill="#a855f7" font-size="9" font-family="Inter" font-weight="700">TRIGGER</text>
+      <text x="70" y="162" text-anchor="middle" fill="#6b7a9c" font-size="8" font-family="Inter">Webhook / Cron</text>
+      <rect x="150" y="80" width="80" height="55" rx="10" fill="#0f1a30" stroke="#4f7fff" stroke-width="1.5" class="flow-node" style="animation-delay:.4s"/>
+      <text x="190" y="105" text-anchor="middle" fill="#4f7fff" font-size="9" font-family="Inter" font-weight="700">API</text>
+      <text x="190" y="122" text-anchor="middle" fill="#6b7a9c" font-size="8" font-family="Inter">CRM / Email</text>
+      <rect x="150" y="165" width="80" height="55" rx="10" fill="#0f1a30" stroke="#10b981" stroke-width="1.5" class="flow-node" style="animation-delay:.8s"/>
+      <text x="190" y="190" text-anchor="middle" fill="#10b981" font-size="9" font-family="Inter" font-weight="700">IA</text>
+      <text x="190" y="207" text-anchor="middle" fill="#6b7a9c" font-size="8" font-family="Inter">Clasificar / Generar</text>
+      <rect x="290" y="120" width="80" height="60" rx="10" fill="#1a1040" stroke="#a855f7" stroke-width="1.5" class="flow-node" style="animation-delay:1.2s"/>
+      <text x="330" y="147" text-anchor="middle" fill="#a855f7" font-size="9" font-family="Inter" font-weight="700">DECISION</text>
+      <text x="330" y="162" text-anchor="middle" fill="#6b7a9c" font-size="8" font-family="Inter">Condición / Filtro</text>
+      <rect x="410" y="80" width="80" height="55" rx="10" fill="#0f1a30" stroke="#ec4899" stroke-width="1.5" class="flow-node" style="animation-delay:1.6s"/>
+      <text x="450" y="105" text-anchor="middle" fill="#ec4899" font-size="9" font-family="Inter" font-weight="700">WhatsApp</text>
+      <text x="450" y="122" text-anchor="middle" fill="#6b7a9c" font-size="8" font-family="Inter">Notificar</text>
+      <rect x="410" y="165" width="80" height="55" rx="10" fill="#0f1a30" stroke="#f59e0b" stroke-width="1.5" class="flow-node" style="animation-delay:2s"/>
+      <text x="450" y="190" text-anchor="middle" fill="#f59e0b" font-size="9" font-family="Inter" font-weight="700">Email</text>
+      <text x="450" y="207" text-anchor="middle" fill="#6b7a9c" font-size="8" font-family="Inter">Campaña / Reporte</text>
+      <!-- Connections -->
+      <path d="M110 150 L150 107" stroke="#4f7fff" stroke-width="1.5" stroke-dasharray="6,3" class="flow-path" style="animation-delay:0s"/>
+      <path d="M110 150 L150 193" stroke="#10b981" stroke-width="1.5" stroke-dasharray="6,3" class="flow-path" style="animation-delay:.5s"/>
+      <path d="M230 107 L290 140" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6,3" class="flow-path" style="animation-delay:1s"/>
+      <path d="M230 193 L290 160" stroke="#a855f7" stroke-width="1.5" stroke-dasharray="6,3" class="flow-path" style="animation-delay:1.5s"/>
+      <path d="M370 135 L410 107" stroke="#ec4899" stroke-width="1.5" stroke-dasharray="6,3" class="flow-path" style="animation-delay:2s"/>
+      <path d="M370 165 L410 193" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="6,3" class="flow-path" style="animation-delay:2.5s"/>
+      <!-- Status dots -->
+      <circle cx="70" cy="123" r="4" fill="#10b981"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle>
+      <circle cx="190" cy="83" r="4" fill="#4f7fff"><animate attributeName="opacity" values="0.3;1;0.3" dur="2.5s" repeatCount="indefinite"/></circle>
+    </svg>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section id="use-cases">
+  <div class="section-inner">
+    <div class="section-tag">Casos de uso</div>
+    <h2 class="section-title">Lo que podemos<br><span class="gradient-text">automatizar</span></h2>
+    <p class="section-sub">Si existe un proceso manual repetitivo en tu negocio, existe una automatización que lo resuelve.</p>
+    <div class="cases-grid">
+      <div class="case-card">
+        <div class="case-icon" style="background:rgba(236,72,153,0.12)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        </div>
+        <h3>Email marketing automático</h3>
+        <p>Secuencias de bienvenida, seguimiento de leads, newsletters programadas y emails de recuperación de carritos sin intervención manual.</p>
+      </div>
+      <div class="case-card">
+        <div class="case-icon" style="background:rgba(16,185,129,0.12)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <h3>WhatsApp Business 24/7</h3>
+        <p>Respuestas automáticas, gestión de citas, confirmaciones de pedidos y soporte sin que tengas que estar pendiente del teléfono.</p>
+      </div>
+      <div class="case-card">
+        <div class="case-icon" style="background:rgba(79,127,255,0.12)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4f7fff" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <h3>CRM y gestión de leads</h3>
+        <p>Captura automática desde formularios, clasificación por IA, asignación a comerciales y seguimiento automatizado del pipeline de ventas.</p>
+      </div>
+      <div class="case-card">
+        <div class="case-icon" style="background:rgba(245,158,11,0.12)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <h3>Generación de reportes</h3>
+        <p>Informes diarios/semanales automáticos: ventas, leads, tráfico web, métricas de redes sociales. Directo a tu email o Slack cada mañana.</p>
+      </div>
+      <div class="case-card">
+        <div class="case-icon" style="background:rgba(168,85,247,0.12)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Recordatorios y citas</h3>
+        <p>Sistema completo de gestión de citas: confirmación, recordatorio 24h antes, recordatorio 2h antes y encuesta post-visita. Todo automático.</p>
+      </div>
+      <div class="case-card">
+        <div class="case-icon" style="background:rgba(99,102,241,0.12)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <h3>Contenido en redes sociales</h3>
+        <p>Generación y publicación automática de posts con IA. Calendario editorial cumplido sin esfuerzo manual, adaptado a tu tono de marca.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT'S INCLUDED -->
+<section id="included">
+  <div class="section-inner">
+    <div class="section-tag">Qué incluye</div>
+    <h2 class="section-title">Todo lo que necesitas<br><span class="gradient-text">para funcionar</span></h2>
+    <div class="included-grid">
+      <div class="included-item">
+        <div class="inc-check"><svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="inc-text"><h4>Análisis de tu proceso actual</h4><p>Mapeamos qué pasos son manuales y cuáles tienen más impacto al automatizar.</p></div>
+      </div>
+      <div class="included-item">
+        <div class="inc-check"><svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="inc-text"><h4>Diseño del flujo n8n</h4><p>Arquitectura completa del workflow con nodos, condicionales y manejo de errores.</p></div>
+      </div>
+      <div class="included-item">
+        <div class="inc-check"><svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="inc-text"><h4>Integración de APIs externas</h4><p>Gmail, WhatsApp, Notion, Airtable, HubSpot, Shopify, o cualquier servicio con API.</p></div>
+      </div>
+      <div class="included-item">
+        <div class="inc-check"><svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="inc-text"><h4>IA integrada donde aporta</h4><p>Clasificación de emails, generación de respuestas, resúmenes automáticos y análisis de sentimiento.</p></div>
+      </div>
+      <div class="included-item">
+        <div class="inc-check"><svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="inc-text"><h4>Testing y validación</h4><p>Pruebas con datos reales antes de activar. Cero sorpresas en producción.</p></div>
+      </div>
+      <div class="included-item">
+        <div class="inc-check"><svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+        <div class="inc-text"><h4>Documentación y formación</h4><p>Manual de uso y 1h de formación para que puedas gestionar el flujo de forma autónoma.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag">Precios</div>
+    <h2 class="section-title">Inversión<br><span class="gradient-text">sin sorpresas</span></h2>
+    <p class="section-sub" style="margin:0 auto">Presupuesto cerrado. Lo que ves es lo que pagas.</p>
+    <div class="price-cards">
+      <div class="price-card">
+        <div class="price-card-name">Básica</div>
+        <div class="price-amount">125€</div>
+        <div class="price-suffix">pago único</div>
+        <p class="price-desc">Un flujo simple: un trigger, 2-4 nodos, una integración. Ideal para empezar a automatizar.</p>
+        <ul class="price-features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>1 workflow completo</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Hasta 2 integraciones externas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Testing con datos reales</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Documentación de uso</li>
+        </ul>
+        <a href="index.html#cta" class="price-cta ghost service-link">Solicitar</a>
+      </div>
+      <div class="price-card featured">
+        <div class="price-card-name">Avanzada</div>
+        <div class="price-amount">250€</div>
+        <div class="price-suffix">pago único</div>
+        <p class="price-desc">Flujo completo con IA integrada, múltiples condicionales y hasta 5 integraciones externas.</p>
+        <ul class="price-features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Hasta 3 workflows relacionados</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>IA para clasificación/generación</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Hasta 5 integraciones</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Manejo de errores avanzado</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Formación 1h incluida</li>
+        </ul>
+        <a href="index.html#cta" class="price-cta primary service-link">Solicitar</a>
+      </div>
+      <div class="price-card">
+        <div class="price-card-name">Suite Completa</div>
+        <div class="price-amount">450€</div>
+        <div class="price-suffix">pago único</div>
+        <p class="price-desc">Ecosistema completo de automatizaciones interconectadas para tu operativa entera.</p>
+        <ul class="price-features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>5+ workflows interconectados</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Stack completo: email + CRM + WhatsApp</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Dashboard de métricas</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>IA personalizada con tus datos</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Soporte 30 días post-entrega</li>
+        </ul>
+        <a href="index.html#cta" class="price-cta ghost service-link">Solicitar</a>
+      </div>
+    </div>
+    <p style="margin-top:24px;font-size:13px;color:var(--muted)">Mantenimiento opcional: 30€/2 meses · incluye ajustes, actualizaciones y soporte</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta-section">
+  <div class="section-inner">
+    <h2>¿Qué proceso quieres<br><span class="gradient-text">automatizar primero?</span></h2>
+    <p>Cuéntanos y en menos de 24h tienes propuesta y presupuesto cerrado.</p>
+    <a href="mailto:roldesluis@gmail.com" class="btn-primary">Solicitar automatización</a>
+  </div>
+</section>
+
+<footer>
+  <a href="index.html" class="footer-logo">
+    <svg viewBox="0 0 200 200" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+      <defs><linearGradient id="fl" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#a855f7"/><stop offset="100%" stop-color="#6366f1"/></linearGradient></defs>
+      <polygon points="100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43" fill="url(#fl)"/>
+    </svg>
+    <span class="footer-logo-text">SIMBAI</span>
+  </a>
+  <div class="footer-copy">&copy; 2026 SIMBAI &mdash; Automatizaciones n8n</div>
+  <a href="mailto:roldesluis@gmail.com" class="footer-email">roldesluis@gmail.com</a>
+</footer>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* CINEMATIC ENTRANCE */
+window.addEventListener('DOMContentLoaded', () => {
+  const panel = document.getElementById('cinema-panel');
+  const barT = document.getElementById('cinema-bar-t');
+  const barB = document.getElementById('cinema-bar-b');
+  const tl = gsap.timeline();
+  tl.to([barT, barB], { y: 0, duration: 0, ease: 'none' })
+    .to(panel, { x: '100%', duration: 0.9, ease: 'power2.inOut' })
+    .to(barT, { y: '-100%', duration: 0.6, ease: 'power2.inOut' }, '-=0.5')
+    .to(barB, { y: '100%', duration: 0.6, ease: 'power2.inOut' }, '-=0.6')
+    .fromTo('#hero-h1', { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out' }, '-=0.4')
+    .fromTo('.hero-tag, .hero-sub', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.15, ease: 'power2.out' }, '-=0.5')
+    .fromTo('#hero-badge, #hero-actions', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.12 }, '-=0.3')
+    .fromTo('#flow-visual', { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.8, ease: 'back.out(1.3)' }, '-=0.4');
+});
+
+/* LENIS */
+const lenis = new Lenis({ duration: 1.1, smoothWheel: true, lerp: 0.09 });
+gsap.ticker.add(t => lenis.raf(t * 1000));
+gsap.ticker.lagSmoothing(0);
+lenis.on('scroll', () => {
+  ScrollTrigger.update();
+  document.getElementById('navbar').classList.toggle('scrolled', lenis.scroll > 80);
+});
+
+/* SCROLL ANIMATIONS */
+gsap.fromTo('.case-card', { opacity: 0, y: 50 }, {
+  opacity: 1, y: 0, duration: 0.65, stagger: 0.09, ease: 'power2.out',
+  scrollTrigger: { trigger: '.cases-grid', start: 'top 88%' }
+});
+gsap.fromTo('.included-item', { opacity: 0, x: -30 }, {
+  opacity: 1, x: 0, duration: 0.55, stagger: 0.08,
+  scrollTrigger: { trigger: '.included-grid', start: 'top 88%' }
+});
+gsap.fromTo('.price-card', { opacity: 0, y: 50, scale: 0.95 }, {
+  opacity: 1, y: 0, scale: 1, duration: 0.65, stagger: 0.12, ease: 'back.out(1.3)',
+  scrollTrigger: { trigger: '.price-cards', start: 'top 85%' }
+});
+['#use-cases','#included','#pricing','#cta-section'].forEach(sel => {
+  const el = document.querySelector(sel);
+  if (!el) return;
+  ['section-tag','section-title','section-sub'].forEach(cls => {
+    const node = el.querySelector('.' + cls);
+    if (node) gsap.fromTo(node, { opacity: 0, y: 30 }, {
+      opacity: 1, y: 0, duration: 0.65, scrollTrigger: { trigger: el, start: 'top 88%' }
+    });
+  });
+});
+
+/* CINEMATIC EXIT for service-links */
+document.querySelectorAll('.service-link').forEach(a => {
+  a.addEventListener('click', e => {
+    const href = a.getAttribute('href');
+    if (!href || href.startsWith('#')) return;
+    e.preventDefault();
+    const panel = document.getElementById('cinema-panel');
+    const barT = document.getElementById('cinema-bar-t');
+    const barB = document.getElementById('cinema-bar-b');
+    gsap.set(panel, { x: '-100%' });
+    const tl = gsap.timeline({ onComplete: () => window.location.href = href });
+    tl.to(barT, { y: 0, duration: 0.3, ease: 'power2.in' })
+      .to(barB, { y: 0, duration: 0.3, ease: 'power2.in' }, 0)
+      .to(panel, { x: 0, duration: 0.5, ease: 'power2.inOut' }, 0.1);
+  });
+});
+
+/* CURSOR */
+(function(){
+  const logo = document.getElementById('cur-logo');
+  if (!logo || window.matchMedia('(max-width:900px)').matches) return;
+  let mx=0,my=0,rx=0,ry=0,rot=0,trot=0;
+  document.addEventListener('mousemove', e => {
+    const dx=e.clientX-mx, dy=e.clientY-my;
+    mx=e.clientX; my=e.clientY;
+    trot=Math.max(-15,Math.min(15,Math.atan2(dy,dx)*(180/Math.PI)*0.07));
+  });
+  document.addEventListener('mousedown', () => logo.classList.add('click'));
+  document.addEventListener('mouseup', () => logo.classList.remove('click'));
+  document.querySelectorAll('a,button,.case-card,.price-card,.included-item').forEach(el => {
+    el.addEventListener('mouseenter', () => logo.classList.add('hvr'));
+    el.addEventListener('mouseleave', () => logo.classList.remove('hvr'));
+  });
+  function lerp(a,b,t){return a+(b-a)*t}
+  (function tick(){
+    rx=lerp(rx,mx,.12); ry=lerp(ry,my,.12);
+    rot=lerp(rot,trot,.08);
+    logo.style.left=rx+'px'; logo.style.top=ry+'px';
+    logo.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;
+    requestAnimationFrame(tick);
+  })();
+})();
+
+/* ANCHOR SCROLL */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t && typeof lenis !== 'undefined') lenis.scrollTo(t, { offset: -80, duration: 1.4 });
+  });
+});
+</script>
+</body>
+</html>

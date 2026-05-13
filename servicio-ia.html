@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA Aplicada — SIMBAI | Chatbots, asistentes y automatización con IA</title>
+<meta name="description" content="IA aplicada a tu negocio: chatbots entrenados con tus datos, generación de contenido, análisis de documentos. Desde 190€.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.umd.min.js"></script>
+<style>
+:root{--bg:#07090f;--bg2:#0c1120;--card:#111827;--border:#1e2d45;--accent:#ec4899;--accent2:#db2777;--gold:#d4af37;--text:#e2e8f4;--muted:#6b7a9c}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:auto}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+@media(min-width:901px){body,body *,body a,body button{cursor:none!important}}
+#cur-logo{position:fixed;width:42px;height:42px;pointer-events:none;z-index:9998;top:-100px;left:-100px;filter:drop-shadow(0 0 10px rgba(236,72,153,0.6)) drop-shadow(0 0 24px rgba(219,39,119,0.3));transition:width .25s,height .25s,filter .3s;will-change:left,top,transform}
+#cur-logo.hvr{width:58px;height:58px;filter:drop-shadow(0 0 22px rgba(236,72,153,1)) drop-shadow(0 0 40px rgba(219,39,119,0.6))}
+#cur-logo.click{width:30px;height:30px}
+@media(max-width:900px){#cur-logo{display:none}}
+#cinema-panel{position:fixed;top:0;left:0;width:100%;height:100%;background:#07090f;z-index:9500;transform:translateX(0);pointer-events:none}
+#cinema-bar-t{position:fixed;top:0;left:0;width:100%;height:10vh;background:#000;z-index:9501;transform:translateY(-100%);pointer-events:none}
+#cinema-bar-b{position:fixed;bottom:0;left:0;width:100%;height:10vh;background:#000;z-index:9501;transform:translateY(100%);pointer-events:none}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:20px 60px;background:rgba(7,9,15,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);transition:padding .3s}
+nav.scrolled{padding:14px 60px}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo-text{font-size:20px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.nav-back{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:14px;font-weight:500;text-decoration:none;transition:color .2s}
+.nav-back:hover{color:var(--text)}
+.nav-cta{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border:none;padding:10px 24px;border-radius:50px;font-size:14px;font-weight:600;text-decoration:none;transition:opacity .2s,transform .2s}
+.nav-cta:hover{opacity:.85;transform:translateY(-1px)}
+@media(max-width:768px){nav{padding:16px 24px}}
+#hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:140px 40px 80px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(236,72,153,0.1) 0%,transparent 60%),radial-gradient(ellipse at 80% 70%,rgba(219,39,119,0.06) 0%,transparent 50%);pointer-events:none}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.3);border-radius:50px;padding:6px 16px;font-size:13px;color:var(--accent);font-weight:500;margin-bottom:32px}
+.hero-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 6px var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.8)}}
+h1{font-size:clamp(36px,6vw,76px);font-weight:900;line-height:1.05;letter-spacing:-2px;max-width:860px;margin-bottom:24px}
+.gradient-text{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.hero-sub{font-size:clamp(15px,2.2vw,19px);color:var(--muted);max-width:580px;line-height:1.75;margin-bottom:40px}
+.hero-price-badge{display:inline-flex;align-items:center;gap:10px;background:rgba(236,72,153,0.08);border:1px solid rgba(236,72,153,0.25);border-radius:14px;padding:12px 24px;margin-bottom:40px}
+.hero-price-from{font-size:13px;color:var(--muted)}
+.hero-price-num{font-size:28px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.hero-price-suffix{font-size:13px;color:var(--muted)}
+.hero-actions{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;padding:16px 36px;border-radius:50px;font-size:16px;font-weight:600;text-decoration:none;transition:transform .2s,box-shadow .2s;box-shadow:0 0 30px rgba(236,72,153,0.3)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(236,72,153,0.5)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--border);padding:16px 36px;border-radius:50px;font-size:16px;font-weight:500;text-decoration:none;transition:border-color .2s,background .2s}
+.btn-secondary:hover{border-color:var(--accent);background:rgba(236,72,153,0.05)}
+/* NEURAL NETWORK VISUAL */
+.neural-visual{width:min(500px,90vw);margin:56px auto 0;position:relative;height:240px}
+.neural-visual svg{width:100%;height:100%}
+.nn-node{animation:nn-pulse 2.5s ease-in-out infinite;transform-origin:center}
+@keyframes nn-pulse{0%,100%{opacity:.5;r:5}50%{opacity:1;r:7}}
+.nn-link{animation:nn-flow 3s linear infinite;stroke-dasharray:8 4}
+@keyframes nn-flow{0%{stroke-dashoffset:0}100%{stroke-dashoffset:-24}}
+section{position:relative;z-index:1}
+.section-inner{max-width:1100px;margin:0 auto;padding:100px 40px}
+.section-tag{display:inline-block;background:rgba(236,72,153,0.1);border:1px solid rgba(236,72,153,0.25);border-radius:50px;padding:4px 14px;font-size:12px;color:var(--accent);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+.section-title{font-size:clamp(26px,4vw,48px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:16px}
+.section-sub{font-size:17px;color:var(--muted);line-height:1.7;max-width:540px}
+#cases{background:var(--bg2)}
+.cases-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin-top:56px}
+.case-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:32px;transition:border-color .3s,transform .3s;position:relative;overflow:hidden}
+.case-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:0;transition:opacity .3s}
+.case-card:hover{border-color:rgba(236,72,153,0.4);transform:translateY(-4px)}
+.case-card:hover::before{opacity:1}
+.case-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.case-icon svg{width:20px;height:20px}
+.case-card h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.case-card p{font-size:14px;color:var(--muted);line-height:1.65}
+#models-section{background:var(--bg)}
+.models-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:56px}
+.model-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:center;transition:border-color .2s,transform .2s}
+.model-card:hover{border-color:rgba(236,72,153,0.3);transform:translateY(-3px)}
+.model-dot{width:14px;height:14px;border-radius:50%;margin:0 auto 16px}
+.model-name{font-size:15px;font-weight:700;margin-bottom:6px}
+.model-use{font-size:12px;color:var(--muted);line-height:1.5}
+#pricing{background:var(--bg2)}
+.price-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;margin-top:56px;max-width:700px;margin-left:auto;margin-right:auto}
+.price-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:40px 32px;display:flex;flex-direction:column;position:relative;overflow:hidden;transition:transform .35s}
+.price-card:hover{transform:translateY(-8px)}
+.price-card.featured{border-color:rgba(236,72,153,0.5);box-shadow:0 0 0 1px rgba(236,72,153,.25),0 20px 60px rgba(236,72,153,.12)}
+.price-card.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--accent),var(--accent2),transparent)}
+.price-card-name{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.price-amount{font-size:52px;font-weight:900;letter-spacing:-3px;line-height:1;margin-bottom:4px;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.price-suffix{font-size:13px;color:var(--muted);margin-bottom:20px}
+.price-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px;flex:1}
+.price-features li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text)}
+.price-features li svg{width:16px;height:16px;flex-shrink:0;margin-top:1px}
+.price-cta{display:block;text-align:center;padding:14px 24px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;transition:all .2s;border:none;font-family:inherit}
+.price-cta.primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;box-shadow:0 0 30px rgba(236,72,153,.25)}
+.price-cta.primary:hover{box-shadow:0 0 50px rgba(236,72,153,.5);transform:translateY(-1px)}
+.price-cta.ghost{background:transparent;color:var(--text);border:1px solid var(--border)}
+.price-cta.ghost:hover{border-color:var(--accent);background:rgba(236,72,153,.05)}
+#cta-section{background:radial-gradient(ellipse at center,rgba(236,72,153,0.1) 0%,transparent 70%);text-align:center}
+#cta-section h2{font-size:clamp(28px,4vw,56px);font-weight:900;letter-spacing:-2px;line-height:1.1;margin-bottom:20px}
+#cta-section p{font-size:17px;color:var(--muted);margin-bottom:40px;max-width:480px;margin-left:auto;margin-right:auto}
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40px 60px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.footer-logo-text{font-size:18px;font-weight:900;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+.footer-copy,.footer-email{font-size:13px;color:var(--muted)}
+.footer-email{text-decoration:none;transition:color .2s}
+.footer-email:hover{color:var(--accent)}
+@media(max-width:768px){.section-inner{padding:72px 24px}footer{padding:32px 24px;flex-direction:column;text-align:center}}
+</style>
+</head>
+<body data-page="service">
+<div id="cinema-panel"></div><div id="cinema-bar-t"></div><div id="cinema-bar-b"></div>
+<div id="cur-logo">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="42" height="42">
+    <defs>
+      <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f5e3a3"/><stop offset="40%" stop-color="#d4af37"/><stop offset="100%" stop-color="#8b6508"/></linearGradient>
+      <linearGradient id="cb" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ec4899"/><stop offset="100%" stop-color="#db2777"/></linearGradient>
+    </defs>
+    <polygon points="100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43" fill="url(#cg)"/>
+    <polygon points="100,50 140,70 150,112 128,144 100,154 72,144 50,112 60,70" fill="url(#cb)" opacity="0.95"/>
+    <ellipse cx="77" cy="90" rx="11" ry="13" fill="#fff" opacity=".95"/><ellipse cx="123" cy="90" rx="11" ry="13" fill="#fff" opacity=".95"/>
+    <ellipse cx="77" cy="91" rx="6.5" ry="8" fill="#07090f"/><ellipse cx="123" cy="91" rx="6.5" ry="8" fill="#07090f"/>
+    <ellipse cx="79" cy="89" rx="2.5" ry="2.5" fill="#fff" opacity=".9"/><ellipse cx="125" cy="89" rx="2.5" ry="2.5" fill="#fff" opacity=".9"/>
+    <polygon points="100,104 108,112 100,122 92,112" fill="#07090f" opacity=".75"/>
+  </svg>
+</div>
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <svg viewBox="0 0 200 200" width="28" height="28" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="nl" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ec4899"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs><polygon points="100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43" fill="url(#nl)" opacity=".9"/><polygon points="100,50 140,70 150,112 128,144 100,154 72,144 50,112 60,70" fill="url(#nl)"/><ellipse cx="77" cy="90" rx="10" ry="12" fill="#fff" opacity=".95"/><ellipse cx="123" cy="90" rx="10" ry="12" fill="#fff" opacity=".95"/><ellipse cx="77" cy="91" rx="6" ry="7.5" fill="#07090f"/><ellipse cx="123" cy="91" rx="6" ry="7.5" fill="#07090f"/></svg>
+    <span class="nav-logo-text">SIMBAI</span>
+  </a>
+  <a href="index.html" class="nav-back service-link"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Volver</a>
+  <a href="index.html#cta" class="nav-cta service-link">Solicitar proyecto</a>
+</nav>
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-tag"><span class="dot"></span>Claude · Gemini · Modelos locales</div>
+  <h1 id="hero-h1">IA real que trabaja<br><span class="gradient-text">con tus datos</span></h1>
+  <p class="hero-sub" id="hero-sub">No es IA genérica — es inteligencia artificial entrenada con la información de tu negocio. Chatbots, asistentes, análisis de documentos y generación de contenido que realmente entiende tu sector.</p>
+  <div class="hero-price-badge" id="hero-badge">
+    <span class="hero-price-from">desde</span>
+    <span class="hero-price-num">190€</span>
+    <span class="hero-price-suffix">· entrega en 5-7 días</span>
+  </div>
+  <div class="hero-actions" id="hero-actions">
+    <a href="index.html#cta" class="btn-primary service-link">Quiero IA en mi negocio</a>
+    <a href="#pricing" class="btn-secondary">Ver opciones</a>
+  </div>
+  <div class="neural-visual" id="neural-vis">
+    <svg viewBox="0 0 500 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="500" height="240" rx="20" fill="#0c1120" stroke="#1e2d45"/>
+      <!-- Layer 1: inputs -->
+      <circle cx="80" cy="60" r="6" fill="#ec4899" class="nn-node" style="animation-delay:.0s"/><text x="80" y="45" text-anchor="middle" fill="#6b7a9c" font-size="9" font-family="Inter">Email</text>
+      <circle cx="80" cy="120" r="6" fill="#ec4899" class="nn-node" style="animation-delay:.3s"/><text x="80" y="105" text-anchor="middle" fill="#6b7a9c" font-size="9" font-family="Inter">Web</text>
+      <circle cx="80" cy="180" r="6" fill="#ec4899" class="nn-node" style="animation-delay:.6s"/><text x="80" y="165" text-anchor="middle" fill="#6b7a9c" font-size="9" font-family="Inter">PDF</text>
+      <!-- Layer 2 -->
+      <circle cx="200" cy="80" r="8" fill="#a855f7" class="nn-node" style="animation-delay:.2s"/>
+      <circle cx="200" cy="140" r="8" fill="#a855f7" class="nn-node" style="animation-delay:.5s"/>
+      <circle cx="200" cy="200" r="8" fill="#a855f7" class="nn-node" style="animation-delay:.8s"/>
+      <!-- Layer 3 -->
+      <circle cx="320" cy="90" r="8" fill="#4f7fff" class="nn-node" style="animation-delay:.4s"/>
+      <circle cx="320" cy="150" r="8" fill="#4f7fff" class="nn-node" style="animation-delay:.7s"/>
+      <!-- Output -->
+      <circle cx="420" cy="120" r="10" fill="#10b981" class="nn-node" style="animation-delay:1s"/><text x="420" y="145" text-anchor="middle" fill="#10b981" font-size="9" font-family="Inter" font-weight="700">Output</text>
+      <!-- Connections L1-L2 -->
+      <line x1="86" y1="60" x2="192" y2="80" stroke="#ec4899" stroke-width="1" opacity=".4" class="nn-link"/>
+      <line x1="86" y1="60" x2="192" y2="140" stroke="#ec4899" stroke-width="1" opacity=".3" class="nn-link" style="animation-delay:.5s"/>
+      <line x1="86" y1="120" x2="192" y2="80" stroke="#ec4899" stroke-width="1" opacity=".3" class="nn-link" style="animation-delay:1s"/>
+      <line x1="86" y1="120" x2="192" y2="140" stroke="#ec4899" stroke-width="1" opacity=".4" class="nn-link" style="animation-delay:1.5s"/>
+      <line x1="86" y1="180" x2="192" y2="140" stroke="#ec4899" stroke-width="1" opacity=".3" class="nn-link" style="animation-delay:.2s"/>
+      <line x1="86" y1="180" x2="192" y2="200" stroke="#ec4899" stroke-width="1" opacity=".4" class="nn-link" style="animation-delay:.7s"/>
+      <!-- L2-L3 -->
+      <line x1="208" y1="80" x2="312" y2="90" stroke="#a855f7" stroke-width="1" opacity=".5" class="nn-link" style="animation-delay:.3s"/>
+      <line x1="208" y1="140" x2="312" y2="90" stroke="#a855f7" stroke-width="1" opacity=".4" class="nn-link" style="animation-delay:.8s"/>
+      <line x1="208" y1="140" x2="312" y2="150" stroke="#a855f7" stroke-width="1" opacity=".5" class="nn-link" style="animation-delay:.1s"/>
+      <line x1="208" y1="200" x2="312" y2="150" stroke="#a855f7" stroke-width="1" opacity=".4" class="nn-link" style="animation-delay:.6s"/>
+      <!-- L3-Output -->
+      <line x1="328" y1="90" x2="410" y2="120" stroke="#4f7fff" stroke-width="1.5" opacity=".6" class="nn-link" style="animation-delay:.4s"/>
+      <line x1="328" y1="150" x2="410" y2="120" stroke="#4f7fff" stroke-width="1.5" opacity=".6" class="nn-link" style="animation-delay:.9s"/>
+      <!-- Labels -->
+      <text x="140" y="36" text-anchor="middle" fill="#6b7a9c" font-size="8" font-family="Inter">Embedding</text>
+      <text x="260" y="36" text-anchor="middle" fill="#6b7a9c" font-size="8" font-family="Inter">Procesado</text>
+      <text x="370" y="36" text-anchor="middle" fill="#6b7a9c" font-size="8" font-family="Inter">Refinado</text>
+    </svg>
+  </div>
+</section>
+<section id="cases">
+  <div class="section-inner">
+    <div class="section-tag">Aplicaciones</div>
+    <h2 class="section-title">IA que resuelve<br><span class="gradient-text">problemas reales</span></h2>
+    <p class="section-sub">No modelos genéricos — soluciones específicas entrenadas con los datos y el tono de tu negocio.</p>
+    <div class="cases-grid">
+      <div class="case-card"><div class="case-icon" style="background:rgba(236,72,153,0.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="1.5" stroke-linecap="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><h3>Chatbot personalizado para tu negocio</h3><p>Asistente entrenado con tu catálogo, FAQ, política de precios y tono de marca. Responde 24/7 en tu web, WhatsApp o Telegram.</p></div>
+      <div class="case-card"><div class="case-icon" style="background:rgba(168,85,247,0.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h3>Análisis de documentos y contratos</h3><p>Sube PDFs, informes o contratos y obtén resúmenes, puntos clave y respuestas a preguntas específicas en segundos.</p></div>
+      <div class="case-card"><div class="case-icon" style="background:rgba(79,127,255,0.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#4f7fff" stroke-width="1.5" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><h3>Generación de contenido automática</h3><p>Posts para redes sociales, descripciones de productos, emails de ventas y artículos de blog. Con el tono exacto de tu marca.</p></div>
+      <div class="case-card"><div class="case-icon" style="background:rgba(16,185,129,0.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Clasificación y análisis automático</h3><p>Clasifica emails de clientes por urgencia, analiza reseñas de Google, procesa formularios de contacto y detecta intenciones automáticamente.</p></div>
+      <div class="case-card"><div class="case-icon" style="background:rgba(245,158,11,0.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><h3>Asistente interno de empresa</h3><p>Base de conocimiento interna con IA: tu equipo hace preguntas y el sistema responde basándose en tus procesos, políticas y manuales.</p></div>
+      <div class="case-card"><div class="case-icon" style="background:rgba(99,102,241,0.12)"><svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h3>IA para atención al cliente</h3><p>Primer filtro inteligente: responde preguntas frecuentes, escala casos complejos a humanos y registra todo en tu CRM automáticamente.</p></div>
+    </div>
+  </div>
+</section>
+<section id="models-section">
+  <div class="section-inner">
+    <div class="section-tag">Stack IA</div>
+    <h2 class="section-title">Los modelos que<br><span class="gradient-text">potencian cada solución</span></h2>
+    <p class="section-sub">Elegimos el modelo correcto para cada tarea. No uno genérico para todo.</p>
+    <div class="models-grid">
+      <div class="model-card"><div class="model-dot" style="background:#58a6ff"></div><div class="model-name">Claude Sonnet</div><div class="model-use">Proyectos complejos, análisis profundo, código y razonamiento avanzado</div></div>
+      <div class="model-card"><div class="model-dot" style="background:#a855f7"></div><div class="model-name">Gemini 2.5 Flash</div><div class="model-use">Documentos largos (hasta 1M tokens), PDFs, análisis de grandes volúmenes</div></div>
+      <div class="model-card"><div class="model-dot" style="background:#10b981"></div><div class="model-name">Qwen2.5:14b (local)</div><div class="model-use">Procesamiento en volumen, privacidad total. Sin datos en la nube</div></div>
+      <div class="model-card"><div class="model-dot" style="background:#ec4899"></div><div class="model-name">LLaVA:7b (visión)</div><div class="model-use">Análisis de imágenes, screenshots, logos y documentos visuales. 100% local</div></div>
+    </div>
+  </div>
+</section>
+<section id="pricing">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-tag">Precios</div>
+    <h2 class="section-title">Inversión según<br><span class="gradient-text">complejidad</span></h2>
+    <div class="price-cards">
+      <div class="price-card"><div class="price-card-name">IA Básica</div><div class="price-amount">190€</div><div class="price-suffix">pago único</div><p class="price-desc">Chatbot o asistente simple entrenado con tu FAQ y catálogo de productos/servicios.</p><ul class="price-features"><li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Chatbot con tu FAQ</li><li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Integración en web o WhatsApp</li><li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Hasta 500 preguntas/respuestas</li></ul><a href="index.html#cta" class="price-cta ghost service-link">Solicitar</a></div>
+      <div class="price-card featured"><div class="price-card-name">IA Avanzada</div><div class="price-amount">390€</div><div class="price-suffix">pago único</div><p class="price-desc">Solución completa con múltiples modelos, integración CRM y entrenamiento con tus documentos reales.</p><ul class="price-features"><li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Entrenado con tus documentos/PDFs</li><li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Multi-canal: web + WhatsApp + email</li><li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Integración con tu CRM/n8n</li><li><svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Escalado a humano cuando es necesario</li></ul><a href="index.html#cta" class="price-cta primary service-link">Solicitar</a></div>
+    </div>
+    <p style="margin-top:24px;font-size:13px;color:var(--muted)">Mantenimiento: 40€/2 meses · incluye actualizaciones del modelo y ajustes de entrenamiento</p>
+  </div>
+</section>
+<section id="cta-section"><div class="section-inner"><h2>¿Qué haría la IA<br><span class="gradient-text">en tu negocio?</span></h2><p>Cuéntanos tu caso y diseñamos la solución exacta que necesitas.</p><a href="mailto:roldesluis@gmail.com" class="btn-primary">Hablar con SIMBAI</a></div></section>
+<footer><a href="index.html" class="footer-logo"><svg viewBox="0 0 200 200" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="fl" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#ec4899"/><stop offset="100%" stop-color="#db2777"/></linearGradient></defs><polygon points="100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43" fill="url(#fl)"/></svg><span class="footer-logo-text">SIMBAI</span></a><div class="footer-copy">&copy; 2026 SIMBAI &mdash; IA Aplicada</div><a href="mailto:roldesluis@gmail.com" class="footer-email">roldesluis@gmail.com</a></footer>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+window.addEventListener('DOMContentLoaded',()=>{
+  const panel=document.getElementById('cinema-panel'),barT=document.getElementById('cinema-bar-t'),barB=document.getElementById('cinema-bar-b');
+  gsap.timeline()
+    .to([barT,barB],{y:0,duration:0})
+    .to(panel,{x:'100%',duration:.9,ease:'power2.inOut'})
+    .to(barT,{y:'-100%',duration:.6,ease:'power2.inOut'},'-=0.5')
+    .to(barB,{y:'100%',duration:.6,ease:'power2.inOut'},'-=0.6')
+    .fromTo('#hero-h1',{opacity:0,y:50},{opacity:1,y:0,duration:.8,ease:'power2.out'},'-=0.4')
+    .fromTo('.hero-tag,.hero-sub',{opacity:0,y:30},{opacity:1,y:0,duration:.6,stagger:.15},'-=0.5')
+    .fromTo('#hero-badge,#hero-actions',{opacity:0,y:20},{opacity:1,y:0,duration:.5,stagger:.12},'-=0.3')
+    .fromTo('#neural-vis',{opacity:0,scale:.85},{opacity:1,scale:1,duration:.9,ease:'back.out(1.4)'},'-=0.4');
+});
+const lenis=new Lenis({duration:1.1,smoothWheel:true,lerp:.09});
+gsap.ticker.add(t=>lenis.raf(t*1000));
+gsap.ticker.lagSmoothing(0);
+lenis.on('scroll',()=>{ScrollTrigger.update();document.getElementById('navbar').classList.toggle('scrolled',lenis.scroll>80)});
+gsap.fromTo('.case-card',{opacity:0,y:50},{opacity:1,y:0,duration:.65,stagger:.09,ease:'power2.out',scrollTrigger:{trigger:'.cases-grid',start:'top 88%'}});
+gsap.fromTo('.model-card',{opacity:0,scale:.9},{opacity:1,scale:1,duration:.6,stagger:.1,ease:'back.out(1.3)',scrollTrigger:{trigger:'.models-grid',start:'top 88%'}});
+gsap.fromTo('.price-card',{opacity:0,y:50,scale:.95},{opacity:1,y:0,scale:1,duration:.65,stagger:.12,ease:'back.out(1.3)',scrollTrigger:{trigger:'.price-cards',start:'top 88%'}});
+document.querySelectorAll('.service-link').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const href=a.getAttribute('href');
+    if(!href||href.startsWith('#'))return;
+    e.preventDefault();
+    const panel=document.getElementById('cinema-panel'),barT=document.getElementById('cinema-bar-t'),barB=document.getElementById('cinema-bar-b');
+    gsap.set(panel,{x:'-100%'});
+    gsap.timeline({onComplete:()=>window.location.href=href})
+      .to(barT,{y:0,duration:.3,ease:'power2.in'})
+      .to(barB,{y:0,duration:.3,ease:'power2.in'},0)
+      .to(panel,{x:0,duration:.5,ease:'power2.inOut'},.1);
+  });
+});
+(function(){
+  const logo=document.getElementById('cur-logo');
+  if(!logo||window.matchMedia('(max-width:900px)').matches)return;
+  let mx=0,my=0,rx=0,ry=0,rot=0,trot=0;
+  document.addEventListener('mousemove',e=>{const dx=e.clientX-mx,dy=e.clientY-my;mx=e.clientX;my=e.clientY;trot=Math.max(-15,Math.min(15,Math.atan2(dy,dx)*(180/Math.PI)*.07))});
+  document.addEventListener('mousedown',()=>logo.classList.add('click'));
+  document.addEventListener('mouseup',()=>logo.classList.remove('click'));
+  document.querySelectorAll('a,button,.case-card,.model-card,.price-card').forEach(el=>{el.addEventListener('mouseenter',()=>logo.classList.add('hvr'));el.addEventListener('mouseleave',()=>logo.classList.remove('hvr'))});
+  function lerp(a,b,t){return a+(b-a)*t}
+  (function tick(){rx=lerp(rx,mx,.12);ry=lerp(ry,my,.12);rot=lerp(rot,trot,.08);logo.style.left=rx+'px';logo.style.top=ry+'px';logo.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;requestAnimationFrame(tick)})();
+})();
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t&&typeof lenis!=='undefined')lenis.scrollTo(t,{offset:-80,duration:1.4})})});
+</script>
+</body>
+</html>
