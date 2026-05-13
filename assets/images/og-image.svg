@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#07090f"/>
+      <stop offset="100%" stop-color="#0c1120"/>
+    </linearGradient>
+    <linearGradient id="acc" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f7fff"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f5e3a3"/>
+      <stop offset="50%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#8b6508"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Ambient glow -->
+  <ellipse cx="200" cy="200" rx="400" ry="300" fill="#4f7fff" opacity="0.04"/>
+  <ellipse cx="1000" cy="400" rx="350" ry="250" fill="#a855f7" opacity="0.035"/>
+  <ellipse cx="600" cy="500" rx="300" ry="200" fill="#d4af37" opacity="0.025"/>
+
+  <!-- Border accent top -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#acc)"/>
+
+  <!-- Lion logo -->
+  <g transform="translate(100, 140)" filter="url(#glow)">
+    <polygon points="100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43" fill="url(#gold)" opacity="0.9"/>
+    <polygon points="100,50 140,70 150,112 128,144 100,154 72,144 50,112 60,70" fill="url(#acc)" opacity="0.95"/>
+    <ellipse cx="77" cy="90" rx="11" ry="13" fill="#fff" opacity="0.95"/>
+    <ellipse cx="123" cy="90" rx="11" ry="13" fill="#fff" opacity="0.95"/>
+    <ellipse cx="77" cy="91" rx="6.5" ry="8" fill="#07090f"/>
+    <ellipse cx="123" cy="91" rx="6.5" ry="8" fill="#07090f"/>
+    <ellipse cx="79" cy="89" rx="2.5" ry="2.5" fill="#fff" opacity="0.9"/>
+    <ellipse cx="125" cy="89" rx="2.5" ry="2.5" fill="#fff" opacity="0.9"/>
+  </g>
+
+  <!-- SIMBAI text -->
+  <text x="320" y="260" font-family="Inter, Arial, sans-serif" font-size="96" font-weight="900" letter-spacing="-4" fill="url(#acc)">SIMBAI</text>
+
+  <!-- Tagline -->
+  <text x="320" y="320" font-family="Inter, Arial, sans-serif" font-size="28" font-weight="400" letter-spacing="8" fill="#6b7a9c" text-transform="uppercase">DIGITALIZACIÓN · IA · RESULTADOS</text>
+
+  <!-- Description -->
+  <text x="320" y="400" font-family="Inter, Arial, sans-serif" font-size="32" font-weight="600" fill="#e2e8f4">Webs premium · Automatizaciones · Marketing Digital</text>
+
+  <!-- CTA badge -->
+  <rect x="320" y="450" width="380" height="56" rx="28" fill="url(#acc)" opacity="0.15"/>
+  <rect x="320" y="450" width="380" height="56" rx="28" fill="none" stroke="url(#acc)" stroke-width="1.5" opacity="0.4"/>
+  <text x="510" y="484" font-family="Inter, Arial, sans-serif" font-size="20" font-weight="600" fill="#4f7fff" text-anchor="middle">Auditoría gratuita en 24h</text>
+
+  <!-- Bottom tagline -->
+  <text x="600" y="590" font-family="Inter, Arial, sans-serif" font-size="16" fill="#3d4f6b" text-anchor="middle">roldesluis@gmail.com · simbai.es</text>
+</svg>

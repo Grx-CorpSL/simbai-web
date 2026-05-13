@@ -16,8 +16,8 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SIMBAI — Digitalización e IA para Pymes">
 <meta name="twitter:description" content="Webs, automatizaciones y marketing con IA para negocios pequeños y medianos.">
-<meta property="og:image" content="https://grx-corpsl.github.io/simbai-web/assets/og-image.png">
-<meta name="twitter:image" content="https://grx-corpsl.github.io/simbai-web/assets/og-image.png">
+<meta property="og:image" content="https://grx-corpsl.github.io/simbai-web/assets/images/og-image.svg">
+<meta name="twitter:image" content="https://grx-corpsl.github.io/simbai-web/assets/images/og-image.svg">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%234f7fff'/><stop offset='100%25' stop-color='%23a855f7'/></linearGradient></defs><polygon points='100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43' fill='url(%23g)'/><polygon points='100,50 140,70 150,112 128,144 100,154 72,144 50,112 60,70' fill='url(%23g)' opacity='.7'/><ellipse cx='77' cy='90' rx='10' ry='12' fill='white' opacity='.9'/><ellipse cx='123' cy='90' rx='10' ry='12' fill='white' opacity='.9'/><ellipse cx='77' cy='91' rx='6' ry='7' fill='%2307090f'/><ellipse cx='123' cy='91' rx='6' ry='7' fill='%2307090f'/></svg>">
 <script type="application/ld+json">
 {
@@ -1773,8 +1773,18 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
   });
 });
 
-/* FORM */
-function handleForm(e) {
+/* FORM — formsubmit.co (email real) + CallMeBot (WhatsApp) */
+const WA_PHONE = '34690881415';
+const WA_APIKEY = 'PENDIENTE'; // Activa en: wa.me/34644349529?text=I+allow+callmebot+to+send+me+messages
+
+async function notifyWhatsApp(texto) {
+  if (WA_APIKEY === 'PENDIENTE') return;
+  try {
+    await fetch(`https://api.callmebot.com/whatsapp.php?phone=${WA_PHONE}&text=${encodeURIComponent(texto)}&apikey=${WA_APIKEY}`, { mode: 'no-cors' });
+  } catch(_) {}
+}
+
+async function handleForm(e) {
   e.preventDefault();
   const form = e.target;
   const btn = form.querySelector('.form-submit');
@@ -1785,13 +1795,35 @@ function handleForm(e) {
   const mensaje = form.mensaje?.value || '';
   btn.textContent = 'Enviando...';
   btn.disabled = true;
-  const subject = encodeURIComponent(`Proyecto SIMBAI — ${nombre}${empresa ? ' (' + empresa + ')' : ''}`);
-  const body = encodeURIComponent(`Nombre: ${nombre}\nEmpresa: ${empresa}\nEmail: ${email}\nServicio: ${servicio}\n\n${mensaje}`);
-  setTimeout(() => {
-    window.location.href = `mailto:roldesluis@gmail.com?subject=${subject}&body=${body}`;
+
+  const waMsg = `LEAD SIMBAI\nNombre: ${nombre}\nEmpresa: ${empresa}\nEmail: ${email}\nServicio: ${servicio}\nMensaje: ${mensaje || '-'}`;
+
+  try {
+    const res = await fetch('https://formsubmit.co/ajax/roldesluis@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        nombre, empresa, email, servicio, mensaje,
+        _subject: `Nuevo lead SIMBAI — ${nombre}${empresa ? ' (' + empresa + ')' : ''}`,
+        _template: 'table',
+        _captcha: 'false'
+      })
+    });
+    if (res.ok) {
+      await notifyWhatsApp(waMsg);
+      form.style.display = 'none';
+      document.getElementById('form-success').style.display = 'block';
+    } else {
+      throw new Error('server');
+    }
+  } catch(_) {
+    notifyWhatsApp(waMsg);
+    const subject = encodeURIComponent(`Lead SIMBAI — ${nombre}`);
+    const body = encodeURIComponent(waMsg);
+    window.open(`mailto:roldesluis@gmail.com?subject=${subject}&body=${body}`);
     form.style.display = 'none';
     document.getElementById('form-success').style.display = 'block';
-  }, 900);
+  }
 }
 </script>
 </body>
