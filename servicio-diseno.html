@@ -92,10 +92,97 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
 .footer-copy,.footer-email{font-size:13px;color:var(--muted)}
 .footer-email{text-decoration:none;transition:color .2s}.footer-email:hover{color:var(--accent)}
 @media(max-width:768px){.section-inner{padding:72px 24px}.palette-visual{flex-wrap:wrap}footer{padding:32px 24px;flex-direction:column;text-align:center}}
+
+/* SAVANNA SIDES */
+.sav-side{position:fixed;top:0;bottom:0;width:130px;pointer-events:none;z-index:1;overflow:hidden}
+.sav-left{left:0}
+.sav-right{right:0;transform:scaleX(-1)}
+@media(max-width:1400px){.sav-side{display:none}}
+
 </style>
 </head>
 <body data-page="service">
 <div id="cinema-panel"></div><div id="cinema-bar-t"></div><div id="cinema-bar-b"></div>
+<!-- SAVANNA SIDES -->
+<div class="sav-side sav-left" aria-hidden="true">
+  <svg width="130" viewBox="0 0 130 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="height:100vh;position:sticky;top:0;display:block;">
+    <defs>
+      <linearGradient id="grassGl" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.75"/>
+        <stop offset="60%" stop-color="#a07830" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#8b6914" stop-opacity="0.1"/>
+      </linearGradient>
+      <linearGradient id="treeGl" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#5a3f0a" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#3d2a06" stop-opacity="0.15"/>
+      </linearGradient>
+    </defs>
+    <path d="M120 900 Q124 720 116 530 Q110 380 122 210" stroke="url(#grassGl)" stroke-width="2.5" fill="none"/>
+    <path d="M108 900 Q112 700 105 510 Q100 360 114 170" stroke="url(#grassGl)" stroke-width="2" fill="none" opacity="0.8"/>
+    <path d="M94 900 Q98 740 90 560 Q84 420 100 260" stroke="url(#grassGl)" stroke-width="1.8" fill="none" opacity="0.65"/>
+    <path d="M80 900 Q84 760 76 580 Q70 440 86 290" stroke="url(#grassGl)" stroke-width="1.5" fill="none" opacity="0.55"/>
+    <path d="M65 900 Q70 780 62 610 Q55 470 72 330" stroke="url(#grassGl)" stroke-width="1.3" fill="none" opacity="0.45"/>
+    <path d="M52 900 Q56 800 48 640 Q42 500 58 370" stroke="url(#grassGl)" stroke-width="1.2" fill="none" opacity="0.3"/>
+    <path d="M126 900 Q128 840 122 700 Q118 600 126 500" stroke="url(#grassGl)" stroke-width="1.5" fill="none" opacity="0.35"/>
+    <ellipse cx="122" cy="200" rx="4" ry="10" fill="#c8a96e" opacity="0.3" transform="rotate(8 122 200)"/>
+    <ellipse cx="114" cy="163" rx="3" ry="8" fill="#d4af37" opacity="0.25" transform="rotate(-5 114 163)"/>
+    <ellipse cx="100" cy="253" rx="3" ry="7" fill="#c8a96e" opacity="0.22" transform="rotate(12 100 253)"/>
+    <line x1="82" y1="900" x2="82" y2="560" stroke="url(#treeGl)" stroke-width="7" stroke-linecap="round"/>
+    <line x1="82" y1="690" x2="115" y2="620" stroke="url(#treeGl)" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="82" y1="665" x2="45" y2="600" stroke="url(#treeGl)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="82" y1="630" x2="105" y2="580" stroke="url(#treeGl)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="82" y1="610" x2="60" y2="568" stroke="url(#treeGl)" stroke-width="2.5" stroke-linecap="round"/>
+    <ellipse cx="115" cy="608" rx="28" ry="10" fill="#5a3f0a" opacity="0.14"/>
+    <ellipse cx="45" cy="588" rx="26" ry="9" fill="#5a3f0a" opacity="0.12"/>
+    <ellipse cx="105" cy="572" rx="22" ry="8" fill="#5a3f0a" opacity="0.12"/>
+    <ellipse cx="60" cy="560" rx="20" ry="8" fill="#5a3f0a" opacity="0.11"/>
+    <ellipse cx="82" cy="552" rx="34" ry="12" fill="#5a3f0a" opacity="0.13"/>
+    <line x1="30" y1="900" x2="30" y2="720" stroke="url(#treeGl)" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+    <ellipse cx="30" cy="712" rx="20" ry="7" fill="#5a3f0a" opacity="0.08"/>
+    <ellipse cx="12" cy="720" rx="15" ry="5" fill="#5a3f0a" opacity="0.07"/>
+    <ellipse cx="48" cy="718" rx="14" ry="5" fill="#5a3f0a" opacity="0.07"/>
+  </svg>
+</div>
+<div class="sav-side sav-right" aria-hidden="true">
+  <svg width="130" viewBox="0 0 130 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" style="height:100vh;position:sticky;top:0;display:block;">
+    <defs>
+      <linearGradient id="grassGr" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#c8a96e" stop-opacity="0.75"/>
+        <stop offset="60%" stop-color="#a07830" stop-opacity="0.4"/>
+        <stop offset="100%" stop-color="#8b6914" stop-opacity="0.1"/>
+      </linearGradient>
+      <linearGradient id="treeGr" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#5a3f0a" stop-opacity="0.35"/>
+        <stop offset="100%" stop-color="#3d2a06" stop-opacity="0.15"/>
+      </linearGradient>
+    </defs>
+    <path d="M10 900 Q6 720 14 530 Q20 380 8 210" stroke="url(#grassGr)" stroke-width="2.5" fill="none"/>
+    <path d="M22 900 Q18 700 25 510 Q30 360 16 170" stroke="url(#grassGr)" stroke-width="2" fill="none" opacity="0.8"/>
+    <path d="M36 900 Q32 740 40 560 Q46 420 30 260" stroke="url(#grassGr)" stroke-width="1.8" fill="none" opacity="0.65"/>
+    <path d="M50 900 Q46 760 54 580 Q60 440 44 290" stroke="url(#grassGr)" stroke-width="1.5" fill="none" opacity="0.55"/>
+    <path d="M65 900 Q60 780 68 610 Q75 470 58 330" stroke="url(#grassGr)" stroke-width="1.3" fill="none" opacity="0.45"/>
+    <path d="M78 900 Q74 800 82 640 Q88 500 72 370" stroke="url(#grassGr)" stroke-width="1.2" fill="none" opacity="0.3"/>
+    <path d="M4 900 Q2 840 8 700 Q12 600 4 500" stroke="url(#grassGr)" stroke-width="1.5" fill="none" opacity="0.35"/>
+    <ellipse cx="8" cy="200" rx="4" ry="10" fill="#c8a96e" opacity="0.3" transform="rotate(-8 8 200)"/>
+    <ellipse cx="16" cy="163" rx="3" ry="8" fill="#d4af37" opacity="0.25" transform="rotate(5 16 163)"/>
+    <ellipse cx="30" cy="253" rx="3" ry="7" fill="#c8a96e" opacity="0.22" transform="rotate(-12 30 253)"/>
+    <line x1="48" y1="900" x2="48" y2="560" stroke="url(#treeGr)" stroke-width="7" stroke-linecap="round"/>
+    <line x1="48" y1="690" x2="15" y2="620" stroke="url(#treeGr)" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="48" y1="665" x2="85" y2="600" stroke="url(#treeGr)" stroke-width="3" stroke-linecap="round"/>
+    <line x1="48" y1="630" x2="25" y2="580" stroke="url(#treeGr)" stroke-width="2.5" stroke-linecap="round"/>
+    <line x1="48" y1="610" x2="70" y2="568" stroke="url(#treeGr)" stroke-width="2.5" stroke-linecap="round"/>
+    <ellipse cx="15" cy="608" rx="28" ry="10" fill="#5a3f0a" opacity="0.14"/>
+    <ellipse cx="85" cy="588" rx="26" ry="9" fill="#5a3f0a" opacity="0.12"/>
+    <ellipse cx="25" cy="572" rx="22" ry="8" fill="#5a3f0a" opacity="0.12"/>
+    <ellipse cx="70" cy="560" rx="20" ry="8" fill="#5a3f0a" opacity="0.11"/>
+    <ellipse cx="48" cy="552" rx="34" ry="12" fill="#5a3f0a" opacity="0.13"/>
+    <line x1="100" y1="900" x2="100" y2="720" stroke="url(#treeGr)" stroke-width="3" stroke-linecap="round" opacity="0.4"/>
+    <ellipse cx="100" cy="712" rx="20" ry="7" fill="#5a3f0a" opacity="0.08"/>
+    <ellipse cx="82" cy="720" rx="15" ry="5" fill="#5a3f0a" opacity="0.07"/>
+    <ellipse cx="118" cy="718" rx="14" ry="5" fill="#5a3f0a" opacity="0.07"/>
+  </svg>
+</div>
+
 <div id="cur-logo">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="42" height="42">
     <defs>

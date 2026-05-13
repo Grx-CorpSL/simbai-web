@@ -16,6 +16,9 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SIMBAI — Digitalización e IA para Pymes">
 <meta name="twitter:description" content="Webs, automatizaciones y marketing con IA para negocios pequeños y medianos.">
+<meta property="og:image" content="https://grx-corpsl.github.io/simbai-web/assets/og-image.png">
+<meta name="twitter:image" content="https://grx-corpsl.github.io/simbai-web/assets/og-image.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%234f7fff'/><stop offset='100%25' stop-color='%23a855f7'/></linearGradient></defs><polygon points='100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43' fill='url(%23g)'/><polygon points='100,50 140,70 150,112 128,144 100,154 72,144 50,112 60,70' fill='url(%23g)' opacity='.7'/><ellipse cx='77' cy='90' rx='10' ry='12' fill='white' opacity='.9'/><ellipse cx='123' cy='90' rx='10' ry='12' fill='white' opacity='.9'/><ellipse cx='77' cy='91' rx='6' ry='7' fill='%2307090f'/><ellipse cx='123' cy='91' rx='6' ry='7' fill='%2307090f'/></svg>">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -499,6 +502,16 @@ section { position: relative; z-index: 1; }
 .why-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(79,127,255,0.1); }
 .icon-wrap { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
 .icon-wrap svg { width: 20px; height: 20px; }
+.ic-blue { background: rgba(79,127,255,0.12); }
+.ic-green { background: rgba(16,185,129,0.12); }
+.ic-purple { background: rgba(168,85,247,0.12); }
+.ic-amber { background: rgba(245,158,11,0.12); }
+.ic-pink { background: rgba(236,72,153,0.12); }
+.ic-indigo { background: rgba(99,102,241,0.12); }
+.ic-teal { background: rgba(20,184,166,0.12); }
+.sav-svg { height: 100vh; position: sticky; top: 0; display: block; }
+.sec-hdr { text-align: center; max-width: 640px; margin: 0 auto; }
+.sec-sub-c { margin: 0 auto; }
 .why-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
 .why-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
 
@@ -783,7 +796,7 @@ footer {
     <li><a href="#pricing">Precios</a></li>
     <li><a href="#para-quien">Clientes</a></li>
     <li><a href="#why">Por qué SIMBAI</a></li>
-    <li><a href="#models">Tecnología</a></li>
+    <li><a href="#models">Capacidades</a></li>
   </ul>
   <a href="#cta" class="nav-cta">Empezar proyecto</a>
   <button class="nav-burger" id="nav-burger" aria-label="Menú">
@@ -929,7 +942,7 @@ footer {
     <div class="services-grid">
 
       <div class="service-card reveal">
-        <div class="service-icon" style="background:rgba(79,127,255,0.12);">
+        <div class="service-icon ic-blue">
           <svg viewBox="0 0 24 24" fill="none" stroke="#4f7fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="10"/>
             <line x1="2" y1="12" x2="22" y2="12"/>
@@ -939,9 +952,9 @@ footer {
         <h3>Webs Premium</h3>
         <p>Diseño de alto impacto con efectos de scroll, animaciones y arquitectura que convierte visitantes en clientes.</p>
         <div class="service-tags">
-          <span class="service-tag">HTML/CSS/JS</span>
-          <span class="service-tag">Animaciones</span>
-          <span class="service-tag">Mobile-first</span>
+          <span class="service-tag">Diseño a medida</span>
+          <span class="service-tag">Efectos premium</span>
+          <span class="service-tag">100% responsive</span>
         </div>
         <div class="service-price-row">
           <span class="service-price">desde 249€</span>
@@ -951,7 +964,7 @@ footer {
       </div>
 
       <div class="service-card reveal">
-        <div class="service-icon" style="background:rgba(168,85,247,0.12);">
+        <div class="service-icon ic-purple">
           <svg viewBox="0 0 24 24" fill="#a855f7">
             <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
           </svg>
@@ -959,9 +972,9 @@ footer {
         <h3>Automatizaciones n8n</h3>
         <p>Flujos que trabajan mientras duermes: emails automáticos, sincronización de datos, alertas, integraciones con cualquier servicio.</p>
         <div class="service-tags">
-          <span class="service-tag">n8n</span>
-          <span class="service-tag">Webhooks</span>
-          <span class="service-tag">APIs</span>
+          <span class="service-tag">Sin intervención manual</span>
+          <span class="service-tag">Respuesta inmediata</span>
+          <span class="service-tag">Integración total</span>
         </div>
         <div class="service-price-row">
           <span class="service-price">desde 125€</span>
@@ -971,7 +984,7 @@ footer {
       </div>
 
       <div class="service-card reveal">
-        <div class="service-icon" style="background:rgba(16,185,129,0.12);">
+        <div class="service-icon ic-green">
           <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="20" x2="18" y2="10"/>
             <line x1="12" y1="20" x2="12" y2="4"/>
@@ -993,7 +1006,7 @@ footer {
       </div>
 
       <div class="service-card reveal">
-        <div class="service-icon" style="background:rgba(236,72,153,0.12);">
+        <div class="service-icon ic-pink">
           <svg viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="1.5" stroke-linecap="round">
             <rect x="4" y="4" width="16" height="16" rx="2"/>
             <rect x="9" y="9" width="6" height="6" rx="1"/>
@@ -1003,9 +1016,9 @@ footer {
         <h3>IA Aplicada</h3>
         <p>Asistentes virtuales, generación de contenido automática, análisis de documentos y chatbots entrenados con tu negocio.</p>
         <div class="service-tags">
-          <span class="service-tag">Claude</span>
-          <span class="service-tag">Gemini</span>
-          <span class="service-tag">Modelos locales</span>
+          <span class="service-tag">IA avanzada</span>
+          <span class="service-tag">Multimodal</span>
+          <span class="service-tag">100% privado</span>
         </div>
         <div class="service-price-row">
           <span class="service-price">desde 190€</span>
@@ -1015,7 +1028,7 @@ footer {
       </div>
 
       <div class="service-card reveal">
-        <div class="service-icon" style="background:rgba(245,158,11,0.12);">
+        <div class="service-icon ic-amber">
           <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2L2 7l10 5 10-5-10-5z"/>
             <path d="M2 17l10 5 10-5"/>
@@ -1037,7 +1050,7 @@ footer {
       </div>
 
       <div class="service-card reveal">
-        <div class="service-icon" style="background:rgba(99,102,241,0.12);">
+        <div class="service-icon ic-indigo">
           <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
           </svg>
@@ -1045,9 +1058,9 @@ footer {
         <h3>Herramientas a medida</h3>
         <p>Extensiones de Chrome, dashboards internos, scrapers, auditorías automatizadas. Si existe un proceso manual, se puede automatizar.</p>
         <div class="service-tags">
-          <span class="service-tag">Chrome Ext.</span>
-          <span class="service-tag">Python</span>
-          <span class="service-tag">Node.js</span>
+          <span class="service-tag">Dashboards</span>
+          <span class="service-tag">Datos automatizados</span>
+          <span class="service-tag">A tu medida</span>
         </div>
         <div class="service-price-row">
           <span class="service-price">desde 188€</span>
@@ -1156,9 +1169,9 @@ footer {
         <a href="#cta" class="price-cta primary">Empezar proyecto</a>
       </div>
 
-      <!-- STACK COMPLETO -->
+      <!-- PAQUETE COMPLETO -->
       <div class="price-card reveal">
-        <div class="price-card-name">Stack Digital Completo</div>
+        <div class="price-card-name">Transformación Digital</div>
         <div class="price-amount">desde <span style="font-size:40px">625</span><span class="currency" style="font-size:22px;vertical-align:baseline">€</span></div>
         <div class="price-suffix">presupuesto personalizado</div>
         <p class="price-desc">Para negocios que quieren la transformación digital completa: web, automatizaciones, IA integrada y marketing desde el primer mes.</p>
@@ -1365,80 +1378,72 @@ footer {
     <div>
       <div class="section-tag">Diferencial</div>
       <h2 class="section-title">Por qué elegir<br><span class="gradient-text">SIMBAI</span></h2>
-      <p class="section-sub">No somos una agencia de 20 personas con procesos lentos. Somos un equipo técnico ágil con IA como copiloto.</p>
+      <p class="section-sub">Cuatro cosas concretas que ninguna agencia tradicional puede garantizarte.</p>
     </div>
     <div class="why-grid">
       <div class="why-card reveal">
-        <div class="icon-wrap" style="background:rgba(79,127,255,0.12)">
-          <svg viewBox="0 0 24 24" fill="#4f7fff"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <div class="icon-wrap ic-blue">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4f7fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
-        <h3>Velocidad de entrega real</h3>
-        <p>Una web básica: 3 días. Una automatización: 24 horas. Sin esperas de semanas para ver el primer resultado.</p>
+        <h3>Primera versión en 48 horas</h3>
+        <p>No esperas semanas para ver algo. A las 48h de arrancar el proyecto tienes una versión real funcionando — no un mockup estático ni una promesa.</p>
       </div>
       <div class="why-card reveal">
-        <div class="icon-wrap" style="background:rgba(16,185,129,0.12)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>
-          </svg>
+        <div class="icon-wrap ic-green">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
         </div>
-        <h3>Todo medido con datos</h3>
-        <p>Cada acción tiene métricas. Sabes exactamente qué está funcionando y qué no, sin jerga técnica.</p>
+        <h3>Hablas directamente con quien trabaja</h3>
+        <p>Sin comerciales, sin PMs intermediarios. La persona que contesta es la misma que escribe el código y diseña la estrategia. Respuesta máxima 4 horas.</p>
       </div>
       <div class="why-card reveal">
-        <div class="icon-wrap" style="background:rgba(168,85,247,0.12)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round">
-            <rect x="4" y="4" width="16" height="16" rx="2"/>
-            <rect x="9" y="9" width="6" height="6" rx="1"/>
-            <path d="M9 2v2M15 2v2M9 20v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/>
-          </svg>
+        <div class="icon-wrap ic-purple">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         </div>
-        <h3>IA donde aporta valor</h3>
-        <p>Usamos modelos de IA para procesos que en una agencia tradicional tomarían días. Tú pagas por resultados, no por horas.</p>
+        <h3>Presupuesto cerrado el mismo día</h3>
+        <p>Nada de "te envío propuesta en 5 días hábiles". Cuéntanos el proyecto hoy y tienes precio cerrado hoy. Si el alcance crece, lo absorbemos nosotros.</p>
       </div>
       <div class="why-card reveal">
-        <div class="icon-wrap" style="background:rgba(245,158,11,0.12)">
-          <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-          </svg>
+        <div class="icon-wrap ic-amber">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
         </div>
-        <h3>Precio claro, sin sorpresas</h3>
-        <p>Presupuesto cerrado antes de empezar. Si aparecen complicaciones, son nuestro problema, no el tuyo.</p>
+        <h3>Resultados visibles en 7 días</h3>
+        <p>No métricas de vanidad — clientes reales, leads reales, tráfico real. Si en 30 días no ves resultados medibles, revisamos el proyecto sin coste adicional.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MODELS -->
+<!-- CAPACIDADES -->
 <section id="models">
   <div class="section-inner" style="padding-bottom:40px;">
     <div style="text-align:center;max-width:600px;margin:0 auto 24px;">
-      <div class="section-tag">Tecnología</div>
-      <h2 class="section-title">El stack que<br>lo hace posible</h2>
-      <p class="section-sub" style="margin:0 auto;">7 modelos de IA + automatización + scraping + deploy. Todo en un solo ecosistema operativo.</p>
+      <div class="section-tag">Capacidades</div>
+      <h2 class="section-title">Lo que podemos<br><span class="gradient-text">hacer por ti</span></h2>
+      <p class="section-sub" style="margin:0 auto;">No una lista de tecnología — una lista de problemas que resolvemos. Rápido, medible y sin sorpresas.</p>
     </div>
   </div>
   <div class="models-marquee-wrap">
     <div class="models-track">
-      <div class="model-pill"><span class="dot" style="background:#58a6ff"></span><span>Claude Sonnet</span><span class="tag">&nbsp;· Proyectos</span></div>
-      <div class="model-pill"><span class="dot" style="background:#10b981"></span><span>Qwen2.5:14b</span><span class="tag">&nbsp;· Volumen</span></div>
-      <div class="model-pill"><span class="dot" style="background:#a855f7"></span><span>Gemini 2.5 Flash</span><span class="tag">&nbsp;· Documentos</span></div>
-      <div class="model-pill"><span class="dot" style="background:#f59e0b"></span><span>DeepSeek Chat</span><span class="tag">&nbsp;· Código</span></div>
-      <div class="model-pill"><span class="dot" style="background:#ec4899"></span><span>LLaVA:7b</span><span class="tag">&nbsp;· Visión</span></div>
-      <div class="model-pill"><span class="dot" style="background:#6366f1"></span><span>CodeLlama:7b</span><span class="tag">&nbsp;· Dev</span></div>
-      <div class="model-pill"><span class="dot" style="background:#14b8a6"></span><span>n8n Workflows</span><span class="tag">&nbsp;· Automatización</span></div>
-      <div class="model-pill"><span class="dot" style="background:#f97316"></span><span>Playwright</span><span class="tag">&nbsp;· Scraping</span></div>
-      <div class="model-pill"><span class="dot" style="background:#84cc16"></span><span>Brave Search</span><span class="tag">&nbsp;· Research</span></div>
-      <div class="model-pill"><span class="dot" style="background:#0ea5e9"></span><span>Docker</span><span class="tag">&nbsp;· Infra</span></div>
-      <div class="model-pill"><span class="dot" style="background:#58a6ff"></span><span>Claude Sonnet</span><span class="tag">&nbsp;· Proyectos</span></div>
-      <div class="model-pill"><span class="dot" style="background:#10b981"></span><span>Qwen2.5:14b</span><span class="tag">&nbsp;· Volumen</span></div>
-      <div class="model-pill"><span class="dot" style="background:#a855f7"></span><span>Gemini 2.5 Flash</span><span class="tag">&nbsp;· Documentos</span></div>
-      <div class="model-pill"><span class="dot" style="background:#f59e0b"></span><span>DeepSeek Chat</span><span class="tag">&nbsp;· Código</span></div>
-      <div class="model-pill"><span class="dot" style="background:#ec4899"></span><span>LLaVA:7b</span><span class="tag">&nbsp;· Visión</span></div>
-      <div class="model-pill"><span class="dot" style="background:#6366f1"></span><span>CodeLlama:7b</span><span class="tag">&nbsp;· Dev</span></div>
-      <div class="model-pill"><span class="dot" style="background:#14b8a6"></span><span>n8n Workflows</span><span class="tag">&nbsp;· Automatización</span></div>
-      <div class="model-pill"><span class="dot" style="background:#f97316"></span><span>Playwright</span><span class="tag">&nbsp;· Scraping</span></div>
-      <div class="model-pill"><span class="dot" style="background:#84cc16"></span><span>Brave Search</span><span class="tag">&nbsp;· Research</span></div>
-      <div class="model-pill"><span class="dot" style="background:#0ea5e9"></span><span>Docker</span><span class="tag">&nbsp;· Infra</span></div>
+      <div class="model-pill"><span class="dot" style="background:#58a6ff"></span><span>Web en 3 días</span><span class="tag">&nbsp;· Garantizado</span></div>
+      <div class="model-pill"><span class="dot" style="background:#10b981"></span><span>Automatizaciones 24/7</span><span class="tag">&nbsp;· Sin intervención</span></div>
+      <div class="model-pill"><span class="dot" style="background:#a855f7"></span><span>Análisis de documentos</span><span class="tag">&nbsp;· IA aplicada</span></div>
+      <div class="model-pill"><span class="dot" style="background:#f59e0b"></span><span>Campañas medibles</span><span class="tag">&nbsp;· ROI real</span></div>
+      <div class="model-pill"><span class="dot" style="background:#ec4899"></span><span>Identidad visual</span><span class="tag">&nbsp;· Diseño premium</span></div>
+      <div class="model-pill"><span class="dot" style="background:#6366f1"></span><span>Chatbot a medida</span><span class="tag">&nbsp;· Con tus datos</span></div>
+      <div class="model-pill"><span class="dot" style="background:#14b8a6"></span><span>Datos de competencia</span><span class="tag">&nbsp;· En tiempo real</span></div>
+      <div class="model-pill"><span class="dot" style="background:#f97316"></span><span>Formularios inteligentes</span><span class="tag">&nbsp;· Con CRM</span></div>
+      <div class="model-pill"><span class="dot" style="background:#84cc16"></span><span>SEO técnico</span><span class="tag">&nbsp;· Posicionamiento</span></div>
+      <div class="model-pill"><span class="dot" style="background:#0ea5e9"></span><span>Infraestructura propia</span><span class="tag">&nbsp;· Sin dependencias</span></div>
+      <div class="model-pill"><span class="dot" style="background:#58a6ff"></span><span>Web en 3 días</span><span class="tag">&nbsp;· Garantizado</span></div>
+      <div class="model-pill"><span class="dot" style="background:#10b981"></span><span>Automatizaciones 24/7</span><span class="tag">&nbsp;· Sin intervención</span></div>
+      <div class="model-pill"><span class="dot" style="background:#a855f7"></span><span>Análisis de documentos</span><span class="tag">&nbsp;· IA aplicada</span></div>
+      <div class="model-pill"><span class="dot" style="background:#f59e0b"></span><span>Campañas medibles</span><span class="tag">&nbsp;· ROI real</span></div>
+      <div class="model-pill"><span class="dot" style="background:#ec4899"></span><span>Identidad visual</span><span class="tag">&nbsp;· Diseño premium</span></div>
+      <div class="model-pill"><span class="dot" style="background:#6366f1"></span><span>Chatbot a medida</span><span class="tag">&nbsp;· Con tus datos</span></div>
+      <div class="model-pill"><span class="dot" style="background:#14b8a6"></span><span>Datos de competencia</span><span class="tag">&nbsp;· En tiempo real</span></div>
+      <div class="model-pill"><span class="dot" style="background:#f97316"></span><span>Formularios inteligentes</span><span class="tag">&nbsp;· Con CRM</span></div>
+      <div class="model-pill"><span class="dot" style="background:#84cc16"></span><span>SEO técnico</span><span class="tag">&nbsp;· Posicionamiento</span></div>
+      <div class="model-pill"><span class="dot" style="background:#0ea5e9"></span><span>Infraestructura propia</span><span class="tag">&nbsp;· Sin dependencias</span></div>
     </div>
   </div>
   <div style="height:80px"></div>
@@ -1449,31 +1454,35 @@ footer {
 <section id="faq" style="background:var(--bg2)">
   <div class="section-inner" style="max-width:780px">
     <span class="section-tag">FAQ</span>
-    <h2 class="section-title">Preguntas<br><span class="gradient-text">frecuentes</span></h2>
+    <h2 class="section-title">Lo que nos preguntan<br><span class="gradient-text">antes de empezar</span></h2>
     <div style="margin-top:48px">
       <div class="faq-item">
-        <div class="faq-q">¿Cuánto cuesta una web con SIMBAI? <span class="faq-arrow">&#9660;</span></div>
-        <div class="faq-a"><p>Una web básica parte desde 249€. Las webs premium con efectos de scroll avanzados, animaciones y secciones a medida están entre 375€ y 625€. Automatizaciones n8n desde 125€. Marketing digital desde 190€/mes. Todos los precios con presupuesto cerrado antes de empezar — sin sorpresas. La mayoría de servicios incluyen la opción de mantenimiento mensual facturado cada 2 meses (entre 30€ y 40€).</p></div>
+        <div class="faq-q">¿Cuánto cuesta trabajar con SIMBAI? <span class="faq-arrow">&#9660;</span></div>
+        <div class="faq-a"><p>Depende del proyecto, pero aquí van los rangos reales: web básica desde 249€, web premium con animaciones entre 375€ y 625€, automatizaciones desde 125€, marketing digital desde 190€/mes. Lo más importante: el precio lo cerramos antes de empezar, no al final. No hay costes ocultos ni "extras" que aparecen a mitad del proyecto.</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">¿Qué incluye el mantenimiento? <span class="faq-arrow">&#9660;</span></div>
-        <div class="faq-a"><p>El mantenimiento cubre actualizaciones de contenido menores, corrección de errores, compatibilidad con nuevos navegadores y soporte técnico. Se factura cada 2 meses: 30€ para webs esenciales y automatizaciones básicas, 40€ para webs profesionales e IA aplicada. Es totalmente opcional — si prefieres gestionar tú mismo, perfecto.</p></div>
+        <div class="faq-q">¿Cuándo veo algo terminado? <span class="faq-arrow">&#9660;</span></div>
+        <div class="faq-a"><p>Más rápido de lo que esperas. Web básica: 3 días hábiles. Web con efectos avanzados: 5-7 días. Una automatización: 24-48 horas. Auditoría digital gratuita: el mismo día o al siguiente. A las 48h de arrancar ya tienes una versión real que puedes ver y tocar, no un boceto.</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">¿Cuánto tarda la entrega? <span class="faq-arrow">&#9660;</span></div>
-        <div class="faq-a"><p>Web básica: 3 días. Web premium: 5-7 días. Automatización n8n: 24-48 horas. Auditoría digital gratuita: menos de 24 horas. Estos son tiempos reales, no promesas de agencia.</p></div>
+        <div class="faq-q">¿Y si no quedo satisfecho con el resultado? <span class="faq-arrow">&#9660;</span></div>
+        <div class="faq-a"><p>Hacemos revisiones hasta que el proyecto quede como debe. No cobramos la entrega final hasta que estés conforme. Si algo no funciona como prometimos en los primeros 30 días, lo arreglamos sin coste adicional. Así de simple.</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">¿Qué diferencia a SIMBAI de una agencia normal? <span class="faq-arrow">&#9660;</span></div>
-        <div class="faq-a"><p>Somos un equipo técnico ágil que usa IA donde realmente aporta. No tienes 5 intermediarios entre tú y quien hace el trabajo. Precio por resultado, no por hora. Y entregamos en días, no en semanas.</p></div>
+        <div class="faq-q">¿En qué se diferencia SIMBAI de contratar una agencia? <span class="faq-arrow">&#9660;</span></div>
+        <div class="faq-a"><p>En tres cosas concretas: velocidad (días, no semanas), comunicación directa (hablas con quien hace el trabajo, no con un comercial) y precio justo (pagas por el proyecto terminado, no por horas de reunión). Las agencias tienen estructura, nosotros tenemos agilidad.</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">¿Trabajáis con autónomos y pequeños negocios? <span class="faq-arrow">&#9660;</span></div>
-        <div class="faq-a"><p>Es nuestro perfil principal. Autónomos, pymes, comercios locales, restaurantes, clínicas, academias... cualquier negocio que necesite presencia digital de verdad y no tenga departamento de marketing interno.</p></div>
+        <div class="faq-q">¿Para qué tipo de negocios trabajáis? <span class="faq-arrow">&#9660;</span></div>
+        <div class="faq-a"><p>Principalmente autónomos, pymes y negocios locales que quieren crecer digitalmente sin depender de un departamento de marketing. Restaurantes, clínicas, academias, consultores, comercios, tiendas... Si tienes clientes que captar o procesos internos que mejoran con automatización, encajamos.</p></div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">¿Cómo empiezo? <span class="faq-arrow">&#9660;</span></div>
-        <div class="faq-a"><p>Rellena el formulario al final de esta página o escríbenos a roldesluis@gmail.com. En menos de 24 horas tienes una auditoría digital gratuita de tu negocio y una propuesta personalizada sin compromiso.</p></div>
+        <div class="faq-q">¿Cómo empezamos? <span class="faq-arrow">&#9660;</span></div>
+        <div class="faq-a"><p>Rellena el formulario de abajo o escríbenos a roldesluis@gmail.com. En menos de 24 horas recibes una auditoría gratuita de tu presencia digital actual y una propuesta concreta para tu negocio — sin compromiso y sin llamadas de venta.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Qué pasa después de la entrega? <span class="faq-arrow">&#9660;</span></div>
+        <div class="faq-a"><p>Tú decides. Puedes gestionar todo tú mismo (te explicamos cómo) o contratar el mantenimiento opcional, que cuesta entre 30€ y 40€ cada dos meses según el servicio. Cubre actualizaciones de contenido, correcciones menores y soporte técnico. Sin permanencia — lo cancelas cuando quieras.</p></div>
       </div>
     </div>
   </div>
