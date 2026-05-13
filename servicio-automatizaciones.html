@@ -6,11 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Automatizaciones n8n — SIMBAI | Flujos que trabajan por ti</title>
 <meta name="description" content="Automatizaciones con n8n e IA para pymes y autónomos. Emails, CRM, WhatsApp, APIs y más. Desde 125€. Entrega en 24-48h.">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.umd.min.js"></script>
 <style>
 :root {
   --bg:#07090f; --bg2:#0c1120; --card:#111827; --border:#1e2d45;
@@ -169,6 +168,13 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
   .touch-ripple{position:fixed;width:10px;height:10px;border-radius:50%;pointer-events:none;z-index:9990;transform:translate(-50%,-50%) scale(0);background:radial-gradient(circle,rgba(212,175,55,.5) 0%,rgba(212,175,55,.1) 60%,transparent 100%);animation:mob-ripple .7s ease-out forwards;}
   @keyframes mob-ripple{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(-50%,-50%) scale(20);opacity:0;}}
 }
+@media(prefers-reduced-motion:reduce){
+  .amb-orb,.sav-side path,.lion-wrap svg,.hero-badge,.loader-letter{animation:none!important;transition:none!important;}
+}
+/* LANG TOGGLE */
+#lang-btn{background:none;border:1px solid rgba(255,255,255,0.12);color:#6b7a9c;font-size:11px;font-weight:700;padding:5px 13px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;transition:border-color .2s,color .2s;white-space:nowrap;flex-shrink:0;}
+#lang-btn:hover{border-color:#4f7fff;color:#4f7fff;}
+@media(max-width:768px){#lang-btn{padding:4px 10px;font-size:10px;}}
 </style>
 </head>
 <body data-page="service">
@@ -510,6 +516,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
   <a href="mailto:roldesluis@gmail.com" class="footer-email">roldesluis@gmail.com</a>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.umd.min.js"></script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
@@ -613,6 +622,14 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     if (t && typeof lenis !== 'undefined') lenis.scrollTo(t, { offset: -80, duration: 1.4 });
   });
 });
+/* TRANSLATE */
+(function(){
+  var b=document.getElementById('lang-btn');
+  if(!b)return;
+  b.addEventListener('click',function(){
+    window.open('https://translate.google.com/translate?sl=es&tl=en&u='+encodeURIComponent(location.href),'_blank','noopener,noreferrer');
+  });
+})();
 </script>
 </body>
 </html>

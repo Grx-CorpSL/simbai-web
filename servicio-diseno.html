@@ -6,11 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diseño y Branding — SIMBAI | Identidad visual para pymes</title>
 <meta name="description" content="Logo, brand kit y materiales digitales para tu negocio. Diseño profesional que transmite confianza desde el primer vistazo. Desde 313€.">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.umd.min.js"></script>
 <style>
 :root{--bg:#07090f;--bg2:#0c1120;--card:#111827;--border:#1e2d45;--accent:#f59e0b;--accent2:#d97706;--gold:#d4af37;--text:#e2e8f4;--muted:#6b7a9c}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -122,6 +121,13 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
   .touch-ripple{position:fixed;width:10px;height:10px;border-radius:50%;pointer-events:none;z-index:9990;transform:translate(-50%,-50%) scale(0);background:radial-gradient(circle,rgba(212,175,55,.5) 0%,rgba(212,175,55,.1) 60%,transparent 100%);animation:mob-ripple .7s ease-out forwards;}
   @keyframes mob-ripple{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(-50%,-50%) scale(20);opacity:0;}}
 }
+@media(prefers-reduced-motion:reduce){
+  .amb-orb,.sav-side path,.lion-wrap svg,.hero-badge,.loader-letter{animation:none!important;transition:none!important;}
+}
+/* LANG TOGGLE */
+#lang-btn{background:none;border:1px solid rgba(255,255,255,0.12);color:#6b7a9c;font-size:11px;font-weight:700;padding:5px 13px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;transition:border-color .2s,color .2s;white-space:nowrap;flex-shrink:0;}
+#lang-btn:hover{border-color:#4f7fff;color:#4f7fff;}
+@media(max-width:768px){#lang-btn{padding:4px 10px;font-size:10px;}}
 </style>
 </head>
 <body data-page="service">
@@ -289,6 +295,9 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
 </section>
 <section id="cta-section"><div class="section-inner"><h2>Tu marca merece<br><span class="gradient-text">verse profesional</span></h2><p>Cuéntanos tu negocio, sector y referencias visuales. Empezamos esta semana.</p><a href="mailto:roldesluis@gmail.com" class="btn-primary">Solicitar diseño</a></div></section>
 <footer><a href="index.html" class="footer-logo"><svg viewBox="0 0 200 200" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="fl" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#f59e0b"/><stop offset="100%" stop-color="#d97706"/></linearGradient></defs><polygon points="100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43" fill="url(#fl)"/></svg><span class="footer-logo-text">SIMBAI</span></a><div class="footer-copy">&copy; 2026 SIMBAI &mdash; Diseño y Branding</div><a href="mailto:roldesluis@gmail.com" class="footer-email">roldesluis@gmail.com</a></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.umd.min.js"></script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
 window.addEventListener('DOMContentLoaded',()=>{
@@ -351,6 +360,14 @@ gsap.fromTo('.price-single',{opacity:0,y:50,scale:.95},{opacity:1,y:0,scale:1,du
   (function tick(){rx=lerp(rx,mx,.12);ry=lerp(ry,my,.12);rot=lerp(rot,trot,.08);logo.style.left=rx+'px';logo.style.top=ry+'px';logo.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;requestAnimationFrame(tick)})();
 })();
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t&&typeof lenis!=='undefined')lenis.scrollTo(t,{offset:-80,duration:1.4})})});
+/* TRANSLATE */
+(function(){
+  var b=document.getElementById('lang-btn');
+  if(!b)return;
+  b.addEventListener('click',function(){
+    window.open('https://translate.google.com/translate?sl=es&tl=en&u='+encodeURIComponent(location.href),'_blank','noopener,noreferrer');
+  });
+})();
 </script>
 </body>
 </html>

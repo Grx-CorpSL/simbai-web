@@ -6,10 +6,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Webs Premium — SIMBAI | Diseño web con scroll effects y conversión real</title>
 <meta name="description" content="Webs de alto impacto con efectos de scroll, animaciones GSAP y optimización de conversión. Para pymes, clínicas, restaurantes y negocios que quieren destacar.">
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <style>
 :root {
   --bg: #07090f;
@@ -57,7 +57,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 #cinema-bar-t, #cinema-bar-b { display: none; }
 
 /* AMBIENT */
-.amb-orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(120px); animation: amb-float 18s ease-in-out infinite; }
+.amb-orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; filter: blur(45px); animation: amb-float 18s ease-in-out infinite; }
 .amb-orb-1 { width: 600px; height: 600px; top: -200px; left: -200px; background: rgba(79,127,255,0.04); animation-duration: 20s; }
 .amb-orb-2 { width: 500px; height: 500px; bottom: 10%; right: -150px; background: rgba(168,85,247,0.035); animation-duration: 25s; animation-delay: -8s; }
 @keyframes amb-float { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(40px,-30px) scale(1.05)} 66%{transform:translate(-20px,20px) scale(0.96)} }
@@ -315,6 +315,13 @@ body[data-page="service"] .page-enter { opacity: 0; transform: translateY(30px);
   .touch-ripple{position:fixed;width:10px;height:10px;border-radius:50%;pointer-events:none;z-index:9990;transform:translate(-50%,-50%) scale(0);background:radial-gradient(circle,rgba(212,175,55,.5) 0%,rgba(212,175,55,.1) 60%,transparent 100%);animation:mob-ripple .7s ease-out forwards;}
   @keyframes mob-ripple{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(-50%,-50%) scale(20);opacity:0;}}
 }
+@media(prefers-reduced-motion:reduce){
+  .amb-orb,.sav-side path,.lion-wrap svg,.hero-badge,.loader-letter{animation:none!important;transition:none!important;}
+}
+/* LANG TOGGLE */
+#lang-btn{background:none;border:1px solid rgba(255,255,255,0.12);color:#6b7a9c;font-size:11px;font-weight:700;padding:5px 13px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;transition:border-color .2s,color .2s;white-space:nowrap;flex-shrink:0;}
+#lang-btn:hover{border-color:#4f7fff;color:#4f7fff;}
+@media(max-width:768px){#lang-btn{padding:4px 10px;font-size:10px;}}
 </style>
 </head>
 <body data-page="service">
@@ -783,6 +790,8 @@ body[data-page="service"] .page-enter { opacity: 0; transform: translateY(30px);
   <p style="color:var(--muted);font-size:12px;">roldesluis@gmail.com</p>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
@@ -879,6 +888,14 @@ gsap.fromTo('.effect-card', { opacity: 0, scale: 0.92 }, {
     p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${Math.random()*3+2}s;animation-delay:${Math.random()*4}s;`;
     container.appendChild(p);
   }
+})();
+/* TRANSLATE */
+(function(){
+  var b=document.getElementById('lang-btn');
+  if(!b)return;
+  b.addEventListener('click',function(){
+    window.open('https://translate.google.com/translate?sl=es&tl=en&u='+encodeURIComponent(location.href),'_blank','noopener,noreferrer');
+  });
 })();
 </script>
 </body>
