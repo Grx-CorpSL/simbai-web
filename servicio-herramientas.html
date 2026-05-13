@@ -125,6 +125,11 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
 .sav-side path:nth-of-type(12){animation-delay:.1s;animation-duration:4.1s}
 .sav-side path:nth-of-type(13){animation-delay:.8s;animation-duration:5.8s}
 .sav-side path:nth-of-type(14){animation-delay:1.4s;animation-duration:3.7s}
+/* ── MOBILE EFFECTS ── */
+@media (max-width:900px){
+  .touch-ripple{position:fixed;width:10px;height:10px;border-radius:50%;pointer-events:none;z-index:9990;transform:translate(-50%,-50%) scale(0);background:radial-gradient(circle,rgba(212,175,55,.5) 0%,rgba(212,175,55,.1) 60%,transparent 100%);animation:mob-ripple .7s ease-out forwards;}
+  @keyframes mob-ripple{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(-50%,-50%) scale(20);opacity:0;}}
+}
 </style>
 </head>
 <body data-page="service">
@@ -315,6 +320,7 @@ gsap.fromTo('.price-card',{opacity:0,y:40,scale:.96},{opacity:1,y:0,scale:1,dura
   if(!panel)return;
   var ex=window.innerWidth/2,ey=window.innerHeight/2,eating=false;
   document.addEventListener('mousemove',function(e){if(!eating){ex=e.clientX;ey=e.clientY;}},{passive:true});
+       document.addEventListener('touchstart',function(e){if(!eating&&e.touches[0]){ex=e.touches[0].clientX;ey=e.touches[0].clientY;}},{passive:true});
   document.querySelectorAll('.service-link').forEach(function(a){
     a.addEventListener('click',function(e){
       var href=a.getAttribute('href');

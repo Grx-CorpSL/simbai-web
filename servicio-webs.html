@@ -309,6 +309,11 @@ body[data-page="service"] .page-enter { opacity: 0; transform: translateY(30px);
 .sav-side path:nth-of-type(5){animation-delay:.9s;animation-duration:3.2s}
 .sav-side path:nth-of-type(6){animation-delay:1.5s;animation-duration:5.1s}
 .sav-side path:nth-of-type(7){animation-delay:.2s;animation-duration:4s}
+/* ── MOBILE EFFECTS ── */
+@media (max-width:900px){
+  .touch-ripple{position:fixed;width:10px;height:10px;border-radius:50%;pointer-events:none;z-index:9990;transform:translate(-50%,-50%) scale(0);background:radial-gradient(circle,rgba(212,175,55,.5) 0%,rgba(212,175,55,.1) 60%,transparent 100%);animation:mob-ripple .7s ease-out forwards;}
+  @keyframes mob-ripple{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(-50%,-50%) scale(20);opacity:0;}}
+}
 </style>
 </head>
 <body data-page="service">
@@ -795,6 +800,7 @@ gsap.registerPlugin(ScrollTrigger);
   if (!panel) return;
   let ex = window.innerWidth / 2, ey = window.innerHeight / 2;
   document.addEventListener('mousemove', e => { ex = e.clientX; ey = e.clientY; }, { passive: true });
+  document.addEventListener('touchstart', e => { if(e.touches[0]) { ex = e.touches[0].clientX; ey = e.touches[0].clientY; } }, { passive: true });
   document.querySelectorAll('.service-link').forEach(link => {
     link.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
