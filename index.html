@@ -465,32 +465,6 @@ section { position: relative; z-index: 1; }
 .pi-price { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .pi-mant { font-size: 11px; color: var(--gold); margin-top: 2px; white-space: nowrap; }
 
-/* PROCESS */
-#process .section-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-.process-steps { display: flex; flex-direction: column; }
-.process-step { display: flex; gap: 24px; padding: 32px 0; border-bottom: 1px solid var(--border); }
-.process-step:last-child { border-bottom: none; }
-.step-num {
-  font-size: 48px; font-weight: 900; letter-spacing: -2px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
-  opacity: 0.25; transition: opacity 0.3s; min-width: 60px; line-height: 1;
-}
-.process-step:hover .step-num { opacity: 1; }
-.step-content h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-.step-content p { font-size: 14px; color: var(--muted); line-height: 1.7; }
-.process-visual {
-  background: var(--card); border: 1px solid var(--border); border-radius: 24px;
-  padding: 48px 40px; text-align: center;
-}
-.process-icon-wrap {
-  width: 80px; height: 80px; margin: 0 auto 24px;
-  background: rgba(79,127,255,0.08); border-radius: 20px;
-  display: flex; align-items: center; justify-content: center; border: 1px solid rgba(79,127,255,0.2);
-}
-.process-icon-wrap svg { width: 40px; height: 40px; }
-.process-visual h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; }
-.process-visual p { font-size: 14px; color: var(--muted); line-height: 1.7; }
 
 /* WHY */
 #why { background: var(--bg2); }
@@ -605,7 +579,6 @@ footer {
   .nav-burger { display: flex; }
 }
 @media (max-width: 768px) {
-  #process .section-inner { grid-template-columns: 1fr; gap: 40px; }
   .form-row { grid-template-columns: 1fr; }
   footer { padding: 32px 24px; justify-content: center; text-align: center; }
   .reel-letter { letter-spacing: -2px; }
