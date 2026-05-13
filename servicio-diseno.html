@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="theme-color" content="#07090f">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Diseño y Branding — SIMBAI | Identidad visual para pymes</title>
 <meta name="description" content="Logo, brand kit y materiales digitales para tu negocio. Diseño profesional que transmite confianza desde el primer vistazo. Desde 313€.">
@@ -292,7 +293,11 @@ footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:40
 gsap.registerPlugin(ScrollTrigger);
 window.addEventListener('DOMContentLoaded',()=>{
   const panel=document.getElementById('cinema-panel');
-  gsap.timeline().to(panel,{clipPath:'circle(0px at 50% 50%)',duration:.7,ease:'power3.out'})
+  var lx=+(sessionStorage.getItem('lx')||window.innerWidth/2);
+  var ly=+(sessionStorage.getItem('ly')||window.innerHeight/2);
+  try{sessionStorage.removeItem('lx');sessionStorage.removeItem('ly');}catch(_){}
+  panel.style.clipPath='circle(150vmax at '+lx+'px '+ly+'px)';
+  gsap.timeline().to(panel,{clipPath:'circle(0px at '+lx+'px '+ly+'px)',duration:.7,ease:'power3.out'})
     .fromTo('#hero-h1',{opacity:0,y:50},{opacity:1,y:0,duration:.8,ease:'power2.out'},'-=0.4')
     .fromTo('.hero-tag,.hero-sub',{opacity:0,y:30},{opacity:1,y:0,duration:.6,stagger:.15},'-=0.5')
     .fromTo('#hero-badge,#hero-actions',{opacity:0,y:20},{opacity:1,y:0,duration:.5,stagger:.12},'-=0.3')
@@ -318,6 +323,7 @@ gsap.fromTo('.price-single',{opacity:0,y:50,scale:.95},{opacity:1,y:0,scale:1,du
       e.preventDefault();
       eating=true;
       var cx=ex,cy=ey;
+      try{sessionStorage.setItem('lx',cx);sessionStorage.setItem('ly',cy);}catch(_){}
       var src=document.getElementById('cur-logo');
       if(src){
         var cl=src.cloneNode(true);

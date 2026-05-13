@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="theme-color" content="#07090f">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Marketing Digital — SIMBAI | SEO, Meta Ads y Google Ads medibles</title>
 <meta name="description" content="Marketing digital con datos reales. SEO local, Meta Ads y Google Ads para pymes y autónomos. Desde 190€/mes con reporting mensual incluido.">
@@ -397,6 +398,7 @@ gsap.fromTo('.price-card',{opacity:0,y:50,scale:.95},{opacity:1,y:0,scale:1,dura
       e.preventDefault();
       eating=true;
       var cx=ex,cy=ey;
+      try{sessionStorage.setItem('lx',cx);sessionStorage.setItem('ly',cy);}catch(_){}
       var src=document.getElementById('cur-logo');
       if(src){
         var cl=src.cloneNode(true);

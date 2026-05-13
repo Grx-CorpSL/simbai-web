@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#07090f">
 <title>SIMBAI — Digitalización e IA para Pymes y Autónomos | Webs, Automatizaciones, Marketing Digital</title>
 <meta name="description" content="SIMBAI digitaliza tu negocio con webs premium, automatizaciones con IA y marketing digital medible. Para pymes, autónomos y emprendedores. Resultados visibles en 7 días.">
 <meta name="robots" content="index, follow">
@@ -814,7 +815,7 @@ footer {
     <li><a href="#models">Capacidades</a></li>
   </ul>
   <a href="#cta" class="nav-cta">Empezar proyecto</a>
-  <button class="nav-burger" id="nav-burger" aria-label="Menú">
+  <button class="nav-burger" id="nav-burger" type="button" aria-label="Menú">
     <span></span><span></span><span></span>
   </button>
 </nav>
@@ -1598,13 +1599,17 @@ class Particle {
     ctx.fillStyle = 'rgba(' + this.color + ',' + alpha + ')'; ctx.fill();
   }
 }
-for (let i = 0; i < 130; i++) particles.push(new Particle());
 function animParticles() {
   ctx.clearRect(0, 0, W, H);
   particles.forEach(p => { p.update(); p.draw(); });
   requestAnimationFrame(animParticles);
 }
-animParticles();
+if (window.innerWidth > 900) {
+  for (let i = 0; i < 130; i++) particles.push(new Particle());
+  animParticles();
+} else {
+  canvas.style.display = 'none';
+}
 
 /* LENIS */
 gsap.registerPlugin(ScrollTrigger);
@@ -1716,6 +1721,7 @@ gsap.fromTo('.contact-form', { opacity: 0, y: 30 }, {
       e.preventDefault();
       eating = true;
       var cx = ex, cy = ey;
+      try { sessionStorage.setItem('lx', cx); sessionStorage.setItem('ly', cy); } catch(_) {}
       var src = document.getElementById('cur-logo');
       if (src) {
         var cl = src.cloneNode(true);
@@ -1811,16 +1817,16 @@ const WA_APIKEY = 'PENDIENTE'; // Activa en: wa.me/34644349529?text=I+allow+call
 (function(){
   if(window.innerWidth > 900) return;
 
-  // 1. TOUCH RIPPLE DORADO
-  document.addEventListener('touchstart', function(e){
-    if(!e.touches[0]) return;
+  // 1. TOUCH RIPPLE DORADO (solo en taps, no en scroll)
+  document.addEventListener('click', function(e){
+    if(!e.clientX && !e.clientY) return;
     var r = document.createElement('div');
     r.className = 'touch-ripple';
-    r.style.left = e.touches[0].clientX + 'px';
-    r.style.top  = e.touches[0].clientY + 'px';
+    r.style.left = e.clientX + 'px';
+    r.style.top  = e.clientY + 'px';
     document.body.appendChild(r);
     setTimeout(function(){ r.remove(); }, 750);
-  }, { passive: true });
+  });
 
   // 2. GYROSCOPE 3D PARALLAX EN HERO
   var hero = document.getElementById('hero');

@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="theme-color" content="#07090f">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Webs Premium — SIMBAI | Diseño web con scroll effects y conversión real</title>
 <meta name="description" content="Webs de alto impacto con efectos de scroll, animaciones GSAP y optimización de conversión. Para pymes, clínicas, restaurantes y negocios que quieren destacar.">
@@ -789,7 +790,11 @@ gsap.registerPlugin(ScrollTrigger);
 (function(){
   const panel = document.getElementById('cinema-panel');
   if (!panel) return;
-  gsap.to(panel, { clipPath: 'circle(0px at 50% 50%)', duration: 0.7, ease: 'power3.out',
+  const lx = +(sessionStorage.getItem('lx') || window.innerWidth/2);
+  const ly = +(sessionStorage.getItem('ly') || window.innerHeight/2);
+  try { sessionStorage.removeItem('lx'); sessionStorage.removeItem('ly'); } catch(_) {}
+  panel.style.clipPath = 'circle(150vmax at '+lx+'px '+ly+'px)';
+  gsap.to(panel, { clipPath: 'circle(0px at '+lx+'px '+ly+'px)', duration: 0.7, ease: 'power3.out',
     onComplete: () => gsap.fromTo('.page-enter', { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.1 })
   });
 })();
@@ -806,6 +811,7 @@ gsap.registerPlugin(ScrollTrigger);
       const href = this.getAttribute('href');
       if (!href || href.startsWith('#')) return;
       e.preventDefault();
+      try { sessionStorage.setItem('lx', ex); sessionStorage.setItem('ly', ey); } catch(_) {}
       gsap.set(panel, { clipPath: `circle(0px at ${ex}px ${ey}px)`, pointerEvents: 'all' });
       gsap.to(panel, { clipPath: `circle(150vmax at ${ex}px ${ey}px)`, duration: 0.65, ease: 'power3.in',
         onComplete: () => { window.location.href = href; }
