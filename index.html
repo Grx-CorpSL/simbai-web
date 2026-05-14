@@ -619,6 +619,7 @@ footer {
   .nav-links { display: none; }
   .nav-cta { display: none; }
   .nav-burger { display: flex; }
+  .amb-orb, #mouse-glow { display: none; }
 }
 @media (max-width: 768px) {
   .form-row { grid-template-columns: 1fr; }
@@ -659,7 +660,7 @@ footer {
 <body>
 
 <!-- LOADER -->
-<div id="loader">
+<div id="loader" aria-hidden="true">
   <div class="loader-letters">
     <span class="loader-letter">S</span><span class="loader-letter">I</span>
     <span class="loader-letter">M</span><span class="loader-letter">B</span>
@@ -670,7 +671,7 @@ footer {
 </div>
 
 <!-- CURSOR - Logo SIMBAI -->
-<div id="cur-logo">
+<div id="cur-logo" aria-hidden="true">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="42" height="42">
     <defs>
       <linearGradient id="lg-cur-gold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -694,15 +695,15 @@ footer {
     <polygon points="100,104 108,112 100,122 92,112" fill="#07090f" opacity="0.75"/>
   </svg>
 </div>
-<div id="mouse-glow"></div>
+<div id="mouse-glow" aria-hidden="true"></div>
 
 <!-- AMBIENT ORBS -->
-<div class="amb-orb amb-orb-1"></div>
-<div class="amb-orb amb-orb-2"></div>
-<div class="amb-orb amb-orb-3"></div>
+<div class="amb-orb amb-orb-1" aria-hidden="true"></div>
+<div class="amb-orb amb-orb-2" aria-hidden="true"></div>
+<div class="amb-orb amb-orb-3" aria-hidden="true"></div>
 
 <!-- CINEMA PANEL -->
-<div id="cinema-panel">
+<div id="cinema-panel" aria-hidden="true">
   <svg id="lion-eat-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
     <defs>
       <linearGradient id="lg-eat-gold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -1571,12 +1572,12 @@ footer {
     </div>
     <form class="contact-form" onsubmit="handleForm(event)">
       <div class="form-row">
-        <input class="form-input" type="text" name="nombre" placeholder="Tu nombre" autocomplete="name" required>
-        <input class="form-input" type="text" name="empresa" placeholder="Empresa o negocio" autocomplete="organization">
+        <input class="form-input" type="text" name="nombre" placeholder="Tu nombre" autocomplete="name" aria-label="Tu nombre" required>
+        <input class="form-input" type="text" name="empresa" placeholder="Empresa o negocio" autocomplete="organization" aria-label="Empresa o negocio">
       </div>
-      <input class="form-input" type="email" name="email" placeholder="Tu email" autocomplete="email" required>
-      <input class="form-input" type="text" name="servicio" placeholder="¿Qué necesitas? (web, automatización, ads...)">
-      <textarea class="form-input" name="mensaje" placeholder="Cuéntanos más sobre tu proyecto (opcional)"></textarea>
+      <input class="form-input" type="email" name="email" placeholder="Tu email" autocomplete="email" aria-label="Tu email" required>
+      <input class="form-input" type="text" name="servicio" placeholder="¿Qué necesitas? (web, automatización, ads...)" aria-label="Qué necesitas">
+      <textarea class="form-input" name="mensaje" placeholder="Cuéntanos más sobre tu proyecto (opcional)" aria-label="Mensaje sobre tu proyecto"></textarea>
       <button type="submit" class="form-submit">Enviar y recibir propuesta &rarr;</button>
     </form>
     <div id="form-success" style="display:none;color:var(--green);margin-top:16px;font-weight:600;font-size:18px;">
@@ -1856,14 +1857,27 @@ document.querySelectorAll('#mobile-menu a').forEach(a => {
   });
 });
 
-/* SWIPER + FAQ */
+/* FAQ */
 document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.faq-q').forEach(q => {
-    q.addEventListener('click', () => {
+    q.setAttribute('role', 'button');
+    q.setAttribute('tabindex', '0');
+    q.setAttribute('aria-expanded', 'false');
+    function toggle() {
       const item = q.parentElement;
       const isOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-      if (!isOpen) item.classList.add('open');
+      document.querySelectorAll('.faq-item').forEach(i => {
+        i.classList.remove('open');
+        i.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen) {
+        item.classList.add('open');
+        q.setAttribute('aria-expanded', 'true');
+      }
+    }
+    q.addEventListener('click', toggle);
+    q.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
     });
   });
 });
