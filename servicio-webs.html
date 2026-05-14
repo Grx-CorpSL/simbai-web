@@ -34,10 +34,10 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 /* CURSOR */
 #cur-logo {
   position: fixed; width: 42px; height: 42px;
-  pointer-events: none; z-index: 9998; top: -100px; left: -100px;
+  pointer-events: none; z-index: 9998; top: 0; left: 0; transform: translate(-200px, -200px);
   filter: drop-shadow(0 0 10px rgba(79,127,255,0.6)) drop-shadow(0 0 24px rgba(168,85,247,0.3));
   transition: width 0.25s cubic-bezier(0.4,0,0.2,1), height 0.25s cubic-bezier(0.4,0,0.2,1), filter 0.3s ease;
-  will-change: left, top, transform;
+  will-change: transform;
 }
 #cur-logo.hvr { width: 60px; height: 60px; filter: drop-shadow(0 0 22px rgba(79,127,255,1)) drop-shadow(0 0 44px rgba(168,85,247,0.6)); }
 #cur-logo.click { width: 30px; height: 30px; }
@@ -851,9 +851,8 @@ gsap.registerPlugin(ScrollTrigger);
     rx = lerp(rx, mx, 0.12); ry = lerp(ry, my, 0.12);
     gx = lerp(gx, mx, 0.045); gy = lerp(gy, my, 0.045);
     rot = lerp(rot, trot, 0.08);
-    logo.style.left = rx + 'px'; logo.style.top = ry + 'px';
-    logo.style.transform = `translate(-50%,-50%) rotate(${rot}deg)`;
-    if (glow) { glow.style.left = gx + 'px'; glow.style.top = gy + 'px'; glow.style.transform = 'translate(-50%,-50%)'; }
+    logo.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%) rotate(${rot}deg)`;
+    if (glow) { glow.style.transform = `translate(${gx}px,${gy}px) translate(-50%,-50%)`; }
     requestAnimationFrame(tick);
   })();
 })();

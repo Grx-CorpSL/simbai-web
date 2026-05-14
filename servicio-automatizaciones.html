@@ -22,7 +22,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overf
 @media(min-width:901px){body,body *,body a,body button{cursor:none!important}}
 
 /* CURSOR */
-#cur-logo{position:fixed;width:42px;height:42px;pointer-events:none;z-index:9998;top:-100px;left:-100px;filter:drop-shadow(0 0 10px rgba(168,85,247,0.6)) drop-shadow(0 0 24px rgba(99,102,241,0.3));transition:width .25s,height .25s,filter .3s;will-change:left,top,transform}
+#cur-logo{position:fixed;width:42px;height:42px;pointer-events:none;z-index:9998;top:0;left:0;transform:translate(-200px,-200px);filter:drop-shadow(0 0 10px rgba(168,85,247,0.6)) drop-shadow(0 0 24px rgba(99,102,241,0.3));transition:width .25s,height .25s,filter .3s;will-change:transform}
 #cur-logo.hvr{width:58px;height:58px;filter:drop-shadow(0 0 22px rgba(168,85,247,1)) drop-shadow(0 0 40px rgba(99,102,241,0.6))}
 #cur-logo.click{width:30px;height:30px}
 @media(max-width:900px){#cur-logo{display:none}}
@@ -608,8 +608,7 @@ document.querySelectorAll('.service-link').forEach(a => {
   (function tick(){
     rx=lerp(rx,mx,.12); ry=lerp(ry,my,.12);
     rot=lerp(rot,trot,.08);
-    logo.style.left=rx+'px'; logo.style.top=ry+'px';
-    logo.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;
+    logo.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%) rotate(${rot}deg)`;
     requestAnimationFrame(tick);
   })();
 })();

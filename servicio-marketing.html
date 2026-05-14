@@ -16,7 +16,7 @@
 html{scroll-behavior:auto}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
 @media(min-width:901px){body,body *,body a,body button{cursor:none!important}}
-#cur-logo{position:fixed;width:42px;height:42px;pointer-events:none;z-index:9998;top:-100px;left:-100px;filter:drop-shadow(0 0 10px rgba(16,185,129,0.6)) drop-shadow(0 0 24px rgba(5,150,105,0.3));transition:width .25s,height .25s,filter .3s;will-change:left,top,transform}
+#cur-logo{position:fixed;width:42px;height:42px;pointer-events:none;z-index:9998;top:0;left:0;transform:translate(-200px,-200px);filter:drop-shadow(0 0 10px rgba(16,185,129,0.6)) drop-shadow(0 0 24px rgba(5,150,105,0.3));transition:width .25s,height .25s,filter .3s;will-change:transform}
 #cur-logo.hvr{width:58px;height:58px;filter:drop-shadow(0 0 22px rgba(16,185,129,1)) drop-shadow(0 0 40px rgba(5,150,105,0.6))}
 #cur-logo.click{width:30px;height:30px}
 @media(max-width:900px){#cur-logo{display:none}}
@@ -432,7 +432,7 @@ gsap.fromTo('.price-card',{opacity:0,y:50,scale:.95},{opacity:1,y:0,scale:1,dura
   document.addEventListener('mouseup',()=>logo.classList.remove('click'));
   document.querySelectorAll('a,button,.srv-card,.price-card,.included-item').forEach(el=>{el.addEventListener('mouseenter',()=>logo.classList.add('hvr'));el.addEventListener('mouseleave',()=>logo.classList.remove('hvr'))});
   function lerp(a,b,t){return a+(b-a)*t}
-  (function tick(){rx=lerp(rx,mx,.12);ry=lerp(ry,my,.12);rot=lerp(rot,trot,.08);logo.style.left=rx+'px';logo.style.top=ry+'px';logo.style.transform=`translate(-50%,-50%) rotate(${rot}deg)`;requestAnimationFrame(tick)})();
+  (function tick(){rx=lerp(rx,mx,.12);ry=lerp(ry,my,.12);rot=lerp(rot,trot,.08);logo.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%) rotate(${rot}deg)`;requestAnimationFrame(tick)})();
 })();
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t&&typeof lenis!=='undefined')lenis.scrollTo(t,{offset:-80,duration:1.4})})});
 /* TRANSLATE */
