@@ -53,6 +53,9 @@
 <link rel="preconnect" href="https://www.googletagmanager.com">
 <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin>
+<link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin>
+<link rel="preload" as="script" href="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.umd.min.js" crossorigin>
 
 <style>
 :root {
@@ -1619,9 +1622,9 @@ footer {
   const bar = document.getElementById('ldr-bar');
   const loader = document.getElementById('loader');
   let pct = 0, done = false;
-  letters.forEach((l, i) => setTimeout(() => l.classList.add('vis'), i * 130 + 200));
+  letters.forEach((l, i) => setTimeout(() => l.classList.add('vis'), i * 60 + 80));
   const iv = setInterval(() => {
-    pct = Math.min(pct + (Math.random() * 2.5 + 0.5), 100);
+    pct = Math.min(pct + (Math.random() * 7 + 3), 100);
     bar.style.width = pct + '%';
     if (pct >= 100 && !done) {
       done = true; clearInterval(iv);
@@ -1629,9 +1632,9 @@ footer {
         loader.classList.add('hide');
         document.body.style.overflow = '';
         startHeroAnimation();
-      }, 500);
+      }, 180);
     }
-  }, 45);
+  }, 30);
 })();
 
 /* PARTICLES */
