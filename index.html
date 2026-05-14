@@ -81,10 +81,11 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 #cur-logo {
   position: fixed; width: 42px; height: 42px;
   pointer-events: none; z-index: 9998;
-  top: -100px; left: -100px;
+  top: 0; left: 0;
+  transform: translate(-200px, -200px);
   filter: drop-shadow(0 0 10px rgba(212,175,55,0.55)) drop-shadow(0 0 24px rgba(79,127,255,0.28));
   transition: width 0.25s cubic-bezier(0.4,0,0.2,1), height 0.25s cubic-bezier(0.4,0,0.2,1), filter 0.3s ease;
-  will-change: left, top, transform;
+  will-change: transform;
 }
 #cur-logo.hvr {
   width: 60px; height: 60px;
@@ -101,6 +102,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
   position: fixed; width: 500px; height: 500px; border-radius: 50%;
   background: radial-gradient(circle, rgba(79,127,255,0.05) 0%, rgba(212,175,55,0.02) 45%, transparent 70%);
   pointer-events: none; z-index: 0; top: 0; left: 0;
+  will-change: transform;
 }
 
 /* PARA QUIEN */
@@ -142,6 +144,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 .amb-orb {
   position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
   filter: blur(45px); animation: amb-float 18s ease-in-out infinite;
+  will-change: transform;
 }
 .amb-orb-1 { width: 600px; height: 600px; top: -200px; left: -200px; background: rgba(79,127,255,0.04); animation-duration: 20s; }
 .amb-orb-2 { width: 500px; height: 500px; bottom: 10%; right: -150px; background: rgba(168,85,247,0.035); animation-duration: 25s; animation-delay: -8s; }
@@ -367,6 +370,17 @@ h1 { font-size: clamp(40px,7vw,88px); font-weight: 900; line-height: 1.05; lette
 /* SECTIONS BASE */
 section { position: relative; z-index: 1; }
 .section-inner { max-width: 1200px; margin: 0 auto; padding: 120px 40px; }
+
+/* SECTION SEPARATORS */
+#services::before, #pricing::before, #para-quien::before, #why::before, #faq::before, #cta::before, #models::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 8%; right: 8%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(79,127,255,0.22) 25%, rgba(168,85,247,0.15) 50%, rgba(79,127,255,0.22) 75%, transparent);
+  pointer-events: none;
+  z-index: 2;
+}
 .section-tag {
   display: inline-block; background: rgba(79,127,255,0.1); border: 1px solid rgba(79,127,255,0.25);
   border-radius: 50px; padding: 4px 14px; font-size: 12px; color: var(--accent);
@@ -1608,21 +1622,26 @@ class Particle {
     ctx.fillStyle = 'rgba(' + this.color + ',' + alpha + ')'; ctx.fill();
   }
 }
+let particleRAFId;
 function animParticles() {
   ctx.clearRect(0, 0, W, H);
   particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animParticles);
+  particleRAFId = requestAnimationFrame(animParticles);
 }
 if (window.innerWidth > 900) {
   for (let i = 0; i < 60; i++) particles.push(new Particle());
   animParticles();
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(particleRAFId);
+    else animParticles();
+  });
 } else {
   canvas.style.display = 'none';
 }
 
 /* LENIS */
 gsap.registerPlugin(ScrollTrigger);
-const lenis = new Lenis({ duration: 1.1, smoothWheel: true, lerp: 0.09 });
+const lenis = new Lenis({ duration: 0.9, smoothWheel: true, lerp: 0.12 });
 gsap.ticker.add((time) => { lenis.raf(time * 1000); });
 gsap.ticker.lagSmoothing(0);
 lenis.on('scroll', () => {
@@ -1774,9 +1793,8 @@ gsap.fromTo('.contact-form', { opacity: 0, y: 30 }, {
     rx = lerp(rx, mx, 0.12); ry = lerp(ry, my, 0.12);
     gx = lerp(gx, mx, 0.045); gy = lerp(gy, my, 0.045);
     rot = lerp(rot, trot, 0.08);
-    logo.style.left = rx + 'px'; logo.style.top = ry + 'px';
-    logo.style.transform = `translate(-50%,-50%) rotate(${rot}deg)`;
-    if (glow) { glow.style.left = gx + 'px'; glow.style.top = gy + 'px'; glow.style.transform = 'translate(-50%,-50%)'; }
+    logo.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%) rotate(${rot}deg)`;
+    if (glow) { glow.style.transform = `translate(${gx}px,${gy}px) translate(-50%,-50%)`; }
     requestAnimationFrame(tick);
   })();
 })();
