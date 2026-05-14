@@ -51,6 +51,7 @@
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="dns-prefetch" href="https://formsubmit.co">
 <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
 <link rel="preload" as="script" href="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin>
@@ -826,7 +827,7 @@ footer {
 </div>
 
 <!-- NAV -->
-<nav id="navbar">
+<nav id="navbar" aria-label="Navegación principal">
   <a href="#hero" class="nav-logo">
     <svg class="nav-lion" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
       <defs>
@@ -861,7 +862,7 @@ footer {
 
 <!-- HERO -->
 <section id="hero">
-  <div class="lion-wrap">
+  <div class="lion-wrap" aria-hidden="true">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="160" height="160">
       <defs>
         <linearGradient id="lg-gold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -926,7 +927,7 @@ footer {
       <div class="stat-label">Automatizaciones activas</div>
     </div>
   </div>
-  <div class="scroll-hint">
+  <div class="scroll-hint" aria-hidden="true">
     <div class="scroll-line"></div>
     Scroll
   </div>
@@ -1834,14 +1835,19 @@ gsap.fromTo('.contact-form', { opacity: 0, y: 30 }, {
     el.addEventListener('mouseleave', () => logo.classList.remove('hvr'));
   });
   function lerp(a, b, t) { return a + (b-a) * t; }
+  let curRafId;
   (function tick() {
     rx = lerp(rx, mx, 0.12); ry = lerp(ry, my, 0.12);
     gx = lerp(gx, mx, 0.045); gy = lerp(gy, my, 0.045);
     rot = lerp(rot, trot, 0.08);
     logo.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%) rotate(${rot}deg)`;
     if (glow) { glow.style.transform = `translate(${gx}px,${gy}px) translate(-50%,-50%)`; }
-    requestAnimationFrame(tick);
+    curRafId = requestAnimationFrame(tick);
   })();
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(curRafId);
+    else curRafId = requestAnimationFrame(tick);
+  });
 })();
 
 /* MOBILE MENU */
