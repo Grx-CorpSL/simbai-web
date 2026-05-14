@@ -20,8 +20,7 @@
 <meta property="og:image" content="https://simbai.es/assets/images/og-image.svg">
 <meta name="twitter:image" content="https://simbai.es/assets/images/og-image.svg">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%234f7fff'/><stop offset='100%25' stop-color='%23a855f7'/></linearGradient></defs><polygon points='100,6 117,43 151,17 137,55 174,42 151,73 190,78 155,95 192,116 154,115 176,148 137,130 143,168 112,146 100,180 88,146 57,168 63,130 24,148 46,115 8,116 45,95 10,78 49,73 26,42 63,55 49,17 83,43' fill='url(%23g)'/><polygon points='100,50 140,70 150,112 128,144 100,154 72,144 50,112 60,70' fill='url(%23g)' opacity='.7'/><ellipse cx='77' cy='90' rx='10' ry='12' fill='white' opacity='.9'/><ellipse cx='123' cy='90' rx='10' ry='12' fill='white' opacity='.9'/><ellipse cx='77' cy='91' rx='6' ry='7' fill='%2307090f'/><ellipse cx='123' cy='91' rx='6' ry='7' fill='%2307090f'/></svg>">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-8YQ02WJJHP"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8YQ02WJJHP');</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-8YQ02WJJHP');window.addEventListener('load',function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-8YQ02WJJHP';document.head.appendChild(s);});</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -50,7 +49,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="dns-prefetch" href="https://www.googletagmanager.com">
 <link rel="dns-prefetch" href="https://formsubmit.co">
 <link rel="preload" as="style" onload="this.onload=null;this.rel='stylesheet'" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"></noscript>
@@ -210,7 +209,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 #loader {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center;
-  z-index: 9999; transition: opacity 0.3s ease, visibility 0.3s;
+  z-index: 9999; transition: opacity 0.3s ease;
 }
 #loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
 .loader-letters { display: flex; gap: 2px; margin-bottom: 44px; }
@@ -223,7 +222,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 }
 .loader-letter.vis { opacity: 1; transform: translateY(0) scale(1); }
 #ldr-bar-wrap { width: 220px; height: 3px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden; margin-bottom: 24px; }
-#ldr-bar { height: 100%; width: 0%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 3px; transition: width 0.06s linear; }
+#ldr-bar { height: 100%; width: 100%; background: linear-gradient(90deg, var(--accent), var(--accent2)); border-radius: 3px; transform: scaleX(0); transform-origin: left; transition: transform 0.06s linear; }
 #ldr-tag { font-size: 11px; letter-spacing: 3px; text-transform: uppercase; color: rgba(107,122,156,0.7); }
 
 /* NAV */
@@ -502,7 +501,7 @@ section { position: relative; z-index: 1; }
   transition: border-color 0.2s, background 0.2s; gap: 16px;
 }
 .price-individual-item:hover { border-color: rgba(79,127,255,0.3); background: #161f35; }
-.pi-left h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.pi-left h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
 .pi-left p { font-size: 12px; color: var(--muted); line-height: 1.5; }
 .pi-right { text-align: right; flex-shrink: 0; }
 .pi-price { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -1301,7 +1300,7 @@ footer {
       <div class="price-individual-grid">
         <div class="price-individual-item">
           <div class="pi-left">
-            <h4>Automatización n8n</h4>
+            <h3>Automatización n8n</h3>
             <p>Flujo completo con IA, webhooks y APIs</p>
           </div>
           <div class="pi-right">
@@ -1311,7 +1310,7 @@ footer {
         </div>
         <div class="price-individual-item">
           <div class="pi-left">
-            <h4>Marketing Digital</h4>
+            <h3>Marketing Digital</h3>
             <p>SEO + Meta Ads con reporting mensual</p>
           </div>
           <div class="pi-right">
@@ -1321,7 +1320,7 @@ footer {
         </div>
         <div class="price-individual-item">
           <div class="pi-left">
-            <h4>IA Aplicada / Chatbot</h4>
+            <h3>IA Aplicada / Chatbot</h3>
             <p>Asistente entrenado con tus datos</p>
           </div>
           <div class="pi-right">
@@ -1331,7 +1330,7 @@ footer {
         </div>
         <div class="price-individual-item">
           <div class="pi-left">
-            <h4>Diseño &amp; Branding completo</h4>
+            <h3>Diseño &amp; Branding completo</h3>
             <p>Logo, brand kit y assets digitales</p>
           </div>
           <div class="pi-right">
@@ -1341,7 +1340,7 @@ footer {
         </div>
         <div class="price-individual-item">
           <div class="pi-left">
-            <h4>Auditoría Digital</h4>
+            <h3>Auditoría Digital</h3>
             <p>SEO, web, redes y competencia</p>
           </div>
           <div class="pi-right">
@@ -1351,7 +1350,7 @@ footer {
         </div>
         <div class="price-individual-item">
           <div class="pi-left">
-            <h4>Herramienta a medida</h4>
+            <h3>Herramienta a medida</h3>
             <p>Extensión Chrome, scraper, dashboard</p>
           </div>
           <div class="pi-right">
@@ -1635,7 +1634,7 @@ footer {
   letters.forEach((l, i) => setTimeout(() => l.classList.add('vis'), i * 60 + 80));
   const iv = setInterval(() => {
     pct = Math.min(pct + (Math.random() * 7 + 3), 100);
-    bar.style.width = pct + '%';
+    bar.style.transform = 'scaleX(' + (pct/100) + ')';
     if (pct >= 100 && !done) {
       done = true; clearInterval(iv);
       setTimeout(() => {
