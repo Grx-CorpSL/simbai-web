@@ -209,7 +209,7 @@ body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tex
 #loader {
   position: fixed; top: 0; left: 0; width: 100%; height: 100%;
   background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center;
-  z-index: 9999; transition: opacity 0.7s ease, visibility 0.7s;
+  z-index: 9999; transition: opacity 0.3s ease, visibility 0.3s;
 }
 #loader.hide { opacity: 0; visibility: hidden; pointer-events: none; }
 .loader-letters { display: flex; gap: 2px; margin-bottom: 44px; }
@@ -641,6 +641,9 @@ footer {
   .touch-ripple{position:fixed;width:10px;height:10px;border-radius:50%;pointer-events:none;z-index:9990;transform:translate(-50%,-50%) scale(0);background:radial-gradient(circle,rgba(212,175,55,.5) 0%,rgba(212,175,55,.1) 60%,transparent 100%);animation:mob-ripple .7s ease-out forwards;}
   @keyframes mob-ripple{0%{transform:translate(-50%,-50%) scale(0);opacity:1;}100%{transform:translate(-50%,-50%) scale(20);opacity:0;}}
 }
+@media (max-width: 900px) {
+  .amb-orb, #mouse-glow, .sav-side { will-change: auto; }
+}
 @media(prefers-reduced-motion:reduce){
   .amb-orb,.sav-side path,.lion-wrap svg,.hero-badge,.loader-letter{animation:none!important;transition:none!important;}
 }
@@ -811,10 +814,10 @@ footer {
 </div>
 
 <!-- CANVAS -->
-<canvas id="bg-canvas"></canvas>
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
 
 <!-- MOBILE MENU -->
-<div id="mobile-menu">
+<div id="mobile-menu" aria-hidden="true">
   <a href="#services" class="mobile-menu-link">Servicios</a>
   <a href="#pricing" class="mobile-menu-link">Precios</a>
   <a href="#para-quien" class="mobile-menu-link">Clientes</a>
@@ -1847,7 +1850,10 @@ const mobileMenu = document.getElementById('mobile-menu');
 burger.addEventListener('click', () => {
   burger.classList.toggle('open');
   mobileMenu.classList.toggle('open');
-  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  const isOpen = mobileMenu.classList.contains('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+  mobileMenu.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+  burger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 });
 document.querySelectorAll('#mobile-menu a').forEach(a => {
   a.addEventListener('click', () => {
@@ -1919,12 +1925,19 @@ const WA_APIKEY = 'PENDIENTE'; // Activa en: wa.me/34644349529?text=I+allow+call
         tgx = Math.max(-1, Math.min(1, (e.gamma||0) / 30));
         tgy = Math.max(-1, Math.min(1, ((e.beta||0) - 40) / 35));
       }, { passive: true });
-      (function tick(){
-        gx += (tgx - gx) * 0.05;
-        gy += (tgy - gy) * 0.05;
-        hero.style.transform = 'perspective(600px) rotateX(' + gy*3 + 'deg) rotateY(' + gx*3 + 'deg)';
-        requestAnimationFrame(tick);
-      })();
+      var rafId;
+      function tick(){
+        gx += (tgx - gx) * 0.05; gy += (tgy - gy) * 0.05;
+        hero.style.transform = 'perspective(600px) rotateX('+gy*3+'deg) rotateY('+gx*3+'deg)';
+        rafId = requestAnimationFrame(tick);
+      }
+      rafId = requestAnimationFrame(tick);
+      if(window.IntersectionObserver){
+        new IntersectionObserver(function(entries){
+          if(entries[0].isIntersecting){ if(!rafId) rafId = requestAnimationFrame(tick); }
+          else { cancelAnimationFrame(rafId); rafId = null; }
+        },{threshold:0.1}).observe(hero);
+      }
     }
     if(typeof DeviceOrientationEvent.requestPermission === 'function'){
       document.addEventListener('touchstart', function reqGyro(){
